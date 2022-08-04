@@ -29,8 +29,6 @@ const styles = {
 };
 
 const Dashboard: NextPage = () => {
-  // const [user, setUser] = React.useState<UserInfo | null>(null);
-
   const { user } = React.useContext(GlobalState);
 
   if (!user) {
@@ -73,16 +71,18 @@ const Dashboard: NextPage = () => {
             </Link>
           </Grid>
           <Grid item xs={12} md={6}>
-            <Button
-              color="info"
-              fullWidth
-              sx={styles.button}
-              variant="contained"
-              disableElevation
-              endIcon={<HistoryIcon />}
-            >
-              View History
-            </Button>
+            <Link style={{ textDecoration: "none" }} href="/dashboard/history">
+              <Button
+                color="info"
+                fullWidth
+                sx={styles.button}
+                variant="contained"
+                disableElevation
+                endIcon={<HistoryIcon />}
+              >
+                View History
+              </Button>
+            </Link>
           </Grid>
           <Grid item xs={12} md={6}>
             <Button

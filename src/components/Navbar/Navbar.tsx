@@ -10,12 +10,17 @@ import Breadcrumbs from "@mui/material/Breadcrumbs";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Link from "../../Link";
 import { useRouter } from "next/router";
-import { logOut } from "../../backend/authentication";
+import { auth } from "../../Libs/firebase";
+import { signOut } from "firebase/auth";
 
-export default function ButtonAppBar() {
+export default function Navbar() {
   const router = useRouter();
-  const goHome: any = () => {
-    router.push("/");
+  const logOut = async () => {
+    signOut(auth)
+      .then(() => {
+        router.push("/");
+      })
+      .catch((error: any) => {});
   };
   return (
     <>
@@ -30,11 +35,10 @@ export default function ButtonAppBar() {
                 IVMS
               </Link>
             </Typography>
-            <Link href="/" style={{ textDecoration: "none", color: "inherit" }}>
-              <Button onClick={() => logOut(goHome)} color="inherit">
-                Logout
-              </Button>
-            </Link>
+
+            <Button onClick={logOut} color="inherit">
+              Logout
+            </Button>
           </Toolbar>
         </Container>
       </AppBar>
