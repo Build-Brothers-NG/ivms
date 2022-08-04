@@ -12,7 +12,11 @@ import { createTheme } from "@mui/material/styles";
 import Link from "../src/Link";
 import { MessageType } from "./register";
 import { useRouter } from "next/router";
-import { AuthType, handleLogin } from "../src/backend/authentication";
+import {
+  AuthType,
+  handleGoogleSignin,
+  handleLogin,
+} from "../src/backend/authentication";
 import { Formik, useFormikContext } from "formik";
 import * as Yup from "yup";
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -58,6 +62,21 @@ const Home: NextPage = () => {
   const [loading, setLoading] = React.useState<boolean>(false);
   const [message, setMessage] = React.useState<MessageType | null>(null);
   const router = useRouter();
+
+  const handlePop = async () => {
+    setLoading(true);
+    const response: any = await handleGoogleSignin();
+    if (response.ok) {
+      setLoading(false);
+      setMessage({ message: response.message, severity: "success" });
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 3000);
+    } else {
+      setLoading(false);
+      setMessage({ message: response.message, severity: "error" });
+    }
+  };
 
   const handleSubmitForm = async (values: AuthType) => {
     setLoading(true);
@@ -152,6 +171,8 @@ const Home: NextPage = () => {
             </Formik>
             <Grid item xs={12} container justifyContent="center">
               <Box
+                sx={{ cursor: "pointer" }}
+                onClick={handlePop}
                 component="img"
                 src={"/static/images/btn_google_signin.png"}
               />

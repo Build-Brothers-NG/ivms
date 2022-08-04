@@ -3,7 +3,11 @@ import {
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
+  GoogleAuthProvider,
+  signInWithPopup,
 } from "firebase/auth";
+
+const provider = new GoogleAuthProvider();
 import { auth } from "../../Libs/firebase";
 
 export type AuthType = {
@@ -49,6 +53,21 @@ const handleRegister = async ({ email, password, fullName }: RegisterType) => {
   }
 };
 
+const handleGoogleSignin = async () => {
+  try {
+    const response = await signInWithPopup(auth, provider);
+    if (response.user) {
+      return {
+        ok: true,
+        user: response.user,
+        message: "Authenticated successfully",
+      };
+    }
+  } catch (error: any) {
+    return { ok: false, problem: error.code, message: error.message };
+  }
+};
+
 const logOut = async ({ callback }: { callback(): void }) => {
   signOut(auth)
     .then(() => {
@@ -57,4 +76,4 @@ const logOut = async ({ callback }: { callback(): void }) => {
     .catch((error) => {});
 };
 
-export { handleLogin, handleRegister, logOut };
+export { handleLogin, handleRegister, logOut, handleGoogleSignin };

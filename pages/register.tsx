@@ -15,7 +15,11 @@ import Link from "../src/Link";
 import { Formik } from "formik";
 
 import * as Yup from "yup";
-import { handleRegister, RegisterType } from "../src/backend/authentication";
+import {
+  handleGoogleSignin,
+  handleRegister,
+  RegisterType,
+} from "../src/backend/authentication";
 import { LoadingButton } from "@mui/lab";
 import { useRouter } from "next/router";
 
@@ -70,6 +74,21 @@ const Register: NextPage = () => {
   const [loading, setLoading] = React.useState<boolean>(false);
   const [message, setMessage] = React.useState<MessageType | null>(null);
   const router = useRouter();
+
+  const handlePop = async () => {
+    setLoading(true);
+    const response: any = await handleGoogleSignin();
+    if (response.ok) {
+      setLoading(false);
+      setMessage({ message: response.message, severity: "success" });
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 3000);
+    } else {
+      setLoading(false);
+      setMessage({ message: response.message, severity: "error" });
+    }
+  };
 
   const handleSubmitForm = async (values: RegisterType) => {
     setLoading(true);
@@ -193,6 +212,8 @@ const Register: NextPage = () => {
             </Formik>
             <Grid item xs={12} container justifyContent="center">
               <Box
+                sx={{ cursor: "pointer" }}
+                onClick={handlePop}
                 component="img"
                 src={"/static/images/btn_google_signin.png"}
               />
