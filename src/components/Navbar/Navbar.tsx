@@ -52,7 +52,7 @@ export default function Navbar() {
           {router.pathname.split("/").map((route: string, index: number) => {
             return (
               route && (
-                <Typography sx={{ textTransform: "capitalize" }}>
+                <Typography key={route} sx={{ textTransform: "capitalize" }}>
                   {route}
                 </Typography>
               )

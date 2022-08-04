@@ -7,15 +7,15 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Link from "../../src/Link";
 
-import BookIcon from "../../src/icons/Book";
-
 import WarningIcon from "@mui/icons-material/Warning";
 import HistoryIcon from "@mui/icons-material/History";
 import GroupIcon from "@mui/icons-material/Group";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
-import { UserInfo } from "firebase/auth";
-import { auth } from "../../src/Libs/firebase";
+
 import { GlobalState } from "../../src/Global";
+import { getProfile } from "../../src/backend/profile";
+import PendingIcon from "@mui/icons-material/Pending";
+import VerifiedIcon from "@mui/icons-material/Verified";
 
 const styles = {
   box: {
@@ -30,6 +30,29 @@ const styles = {
 
 const Dashboard: NextPage = () => {
   const { user } = React.useContext(GlobalState);
+  const [isVerified, setIsVerified] = React.useState<boolean>(false);
+  const [isProfileComplete, setIsProfileComplet] =
+    React.useState<boolean>(true);
+
+  const handleCheckProfile = async (email: string) => {
+    const response = await getProfile(email);
+    if (response.ok) {
+      if (response.user) {
+        setIsProfileComplet(true);
+        if (response.user?.isVerified) {
+          setIsVerified(true);
+        }
+      } else {
+        setIsProfileComplet(false);
+      }
+    }
+  };
+
+  React.useEffect(() => {
+    if (user) {
+      handleCheckProfile(user.email);
+    }
+  }, [user]);
 
   if (!user) {
     return null;
@@ -44,17 +67,46 @@ const Dashboard: NextPage = () => {
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <Link style={{ textDecoration: "none" }} href="/dashboard/profile">
-              <Button
-                color="warning"
-                sx={{ px: 2, py: 2 }}
-                variant="contained"
-                disableElevation
-                startIcon={<WarningIcon />}
+            {isProfileComplete ? (
+              <>
+                {isVerified ? (
+                  <Button
+                    color="info"
+                    sx={{ px: 2, py: 2 }}
+                    variant="contained"
+                    disableElevation
+                    startIcon={<VerifiedIcon />}
+                  >
+                    Your profile Verified!
+                  </Button>
+                ) : (
+                  <Button
+                    color="info"
+                    sx={{ px: 2, py: 2 }}
+                    variant="contained"
+                    disableElevation
+                    startIcon={<PendingIcon />}
+                  >
+                    Your profile is awaiting verification!
+                  </Button>
+                )}
+              </>
+            ) : (
+              <Link
+                style={{ textDecoration: "none" }}
+                href="/dashboard/profile"
               >
-                Complete your profile
-              </Button>
-            </Link>
+                <Button
+                  color="warning"
+                  sx={{ px: 2, py: 2 }}
+                  variant="contained"
+                  disableElevation
+                  startIcon={<WarningIcon />}
+                >
+                  Complete your profile
+                </Button>
+              </Link>
+            )}
           </Grid>
           <Grid item xs={12} md={6}>
             <Link style={{ textDecoration: "none" }} href="/dashboard/booking">
@@ -64,7 +116,7 @@ const Dashboard: NextPage = () => {
                 sx={styles.button}
                 variant="contained"
                 disableElevation
-                endIcon={<BookIcon />}
+                endIcon={<ReceiptLongIcon />}
               >
                 Book Visit
               </Button>
