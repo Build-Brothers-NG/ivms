@@ -68,7 +68,7 @@ const handleGoogleSignin = async () => {
   }
 };
 
-const logOut = async ({ callback }: { callback(): void }) => {
+const logOut = async ({ callback }: { callback: any }) => {
   signOut(auth)
     .then(() => {
       callback();

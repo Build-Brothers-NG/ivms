@@ -7,6 +7,9 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { InputLabel } from "@mui/material";
+import { auth } from "../../src/Libs/firebase";
+import { UserInfo } from "firebase/auth";
+import { GlobalState } from "../../src/Global";
 
 const styles = {
   box: { px: { xs: 1, md: "24px" }, my: 3 },
@@ -18,17 +21,27 @@ const styles = {
 };
 
 const Profile: NextPage = () => {
+  const { user } = React.useContext(GlobalState);
+
+  if (!user) {
+    return null;
+  }
   return (
     <Container>
       <Box sx={styles.box}>
         <Grid container spacing={{ xs: 3, md: 5 }}>
           <Grid item xs={12}>
             <Typography color="primary" variant="h4">
-              Hi, John Doe 👋 complete your profile.
+              Hi, {user.displayName} 👋 complete your profile.
             </Typography>
           </Grid>
           <Grid item xs={12} md={6}>
-            <TextField fullWidth variant="filled" label="Full name" />
+            <TextField
+              fullWidth
+              value={user.displayName}
+              variant="filled"
+              label="Full name"
+            />
             <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
               Please provide the full name of the applicant{" "}
               <span className="important">*</span>

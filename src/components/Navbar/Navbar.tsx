@@ -10,9 +10,13 @@ import Breadcrumbs from "@mui/material/Breadcrumbs";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Link from "../../Link";
 import { useRouter } from "next/router";
+import { logOut } from "../../backend/authentication";
 
 export default function ButtonAppBar() {
   const router = useRouter();
+  const goHome: any = () => {
+    router.push("/");
+  };
   return (
     <>
       <AppBar position="static" sx={{ boxShadow: "none" }}>
@@ -27,7 +31,9 @@ export default function ButtonAppBar() {
               </Link>
             </Typography>
             <Link href="/" style={{ textDecoration: "none", color: "inherit" }}>
-              <Button color="inherit">Logout</Button>
+              <Button onClick={() => logOut(goHome)} color="inherit">
+                Logout
+              </Button>
             </Link>
           </Toolbar>
         </Container>

@@ -15,6 +15,7 @@ import GroupIcon from "@mui/icons-material/Group";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import { UserInfo } from "firebase/auth";
 import { auth } from "../../src/Libs/firebase";
+import { GlobalState } from "../../src/Global";
 
 const styles = {
   box: {
@@ -28,15 +29,9 @@ const styles = {
 };
 
 const Dashboard: NextPage = () => {
-  const [user, setUser] = React.useState<UserInfo | null>(null);
+  // const [user, setUser] = React.useState<UserInfo | null>(null);
 
-  React.useEffect(() => {
-    const temp = auth.currentUser;
-    if (temp) {
-      setUser(temp);
-      console.log(temp);
-    }
-  }, []);
+  const { user } = React.useContext(GlobalState);
 
   if (!user) {
     return null;
