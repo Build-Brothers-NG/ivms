@@ -1,0 +1,181 @@
+import * as React from "react";
+import type { NextPage } from "next";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import TextField from "@mui/material/TextField";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
+
+import { createTheme } from "@mui/material/styles";
+
+import Link from "../src/Link";
+import { MessageType } from "./register";
+import { useRouter } from "next/router";
+import { AuthType, handleLogin } from "../src/backend/authentication";
+import { Formik, useFormikContext } from "formik";
+import * as Yup from "yup";
+import LoadingButton from "@mui/lab/LoadingButton";
+
+import LoginIcon from "@mui/icons-material/Login";
+
+const theme = createTheme();
+
+const styles = {
+  root: {
+    display: "flex",
+    justifyContent: "space-between",
+    width: "100%",
+  },
+  login: {
+    width: { xs: "100%", md: "50%" },
+    px: { xs: 2, md: 5 },
+    py: { xs: 2, md: 2 },
+  },
+  image: {
+    backgroundImage: "url(/static/images/inmate.jpg)",
+    backgroundPosition: "center",
+    backgroundSize: "cover",
+    width: "50%",
+    height: "100vh",
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
+  },
+};
+
+const validationSchema = Yup.object().shape({
+  email: Yup.string().required().email().label("Email"),
+  password: Yup.string().required().min(8).label("Password"),
+});
+
+const initialValues: AuthType = {
+  email: "",
+  password: "",
+};
+
+const Home: NextPage = () => {
+  const [loading, setLoading] = React.useState<boolean>(false);
+  const [message, setMessage] = React.useState<MessageType | null>(null);
+  const router = useRouter();
+
+  const handleSubmitForm = async (values: AuthType) => {
+    setLoading(true);
+    const response: any = await handleLogin(values);
+    if (response.ok) {
+      setLoading(false);
+      setMessage({ message: response.message, severity: "success" });
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 3000);
+    } else {
+      setLoading(false);
+      setMessage({ message: response.message, severity: "error" });
+    }
+  };
+
+  React.useEffect(() => {
+    return () => setMessage(null);
+  }, []);
+  return (
+    <>
+      <Box sx={styles.root}>
+        <Box sx={styles.login}>
+          <Grid container spacing={5}>
+            <Grid item xs={12}>
+              <Typography color="primary" variant="h3">
+                Inmate VMS
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography color="primary" variant="h4">
+                Login
+              </Typography>
+            </Grid>
+            <Formik
+              initialValues={initialValues}
+              onSubmit={handleSubmitForm}
+              validationSchema={validationSchema}
+            >
+              {({
+                handleChange,
+                handleBlur,
+                handleSubmit,
+                values,
+                errors,
+                touched,
+              }) => (
+                <>
+                  <Grid item xs={12}>
+                    <TextField
+                      onBlur={handleBlur("email")}
+                      onChange={handleChange("email")}
+                      error={
+                        Boolean(errors["email"]) && Boolean(touched["email"])
+                      }
+                      helperText={errors["email"]}
+                      fullWidth
+                      variant="filled"
+                      label="Email Address"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      onBlur={handleBlur("password")}
+                      onChange={handleChange("password")}
+                      error={
+                        Boolean(errors["password"]) &&
+                        Boolean(touched["password"])
+                      }
+                      helperText={errors["password"]}
+                      type="password"
+                      fullWidth
+                      variant="filled"
+                      label="Password"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <LoadingButton
+                      onClick={() => handleSubmit()}
+                      loading={loading}
+                      loadingPosition="end"
+                      endIcon={<LoginIcon />}
+                      sx={{ width: "fit-content", px: 3, py: 2 }}
+                      variant="contained"
+                      disableElevation
+                    >
+                      Login
+                    </LoadingButton>
+                  </Grid>
+                </>
+              )}
+            </Formik>
+            <Grid item xs={12} container justifyContent="center">
+              <Box
+                component="img"
+                src={"/static/images/btn_google_signin.png"}
+              />
+            </Grid>
+            <Grid item xs={12} container justifyContent="center">
+              <Link href={"/register"}>
+                <Typography color="primary" variant="h5">
+                  Create account
+                </Typography>
+              </Link>
+            </Grid>
+          </Grid>
+        </Box>
+        <Box sx={styles.image}></Box>
+      </Box>
+      <Snackbar
+        open={Boolean(message)}
+        autoHideDuration={6000}
+        onClose={() => setMessage(null)}
+      >
+        <Alert severity={message?.severity}>{message?.message}</Alert>
+      </Snackbar>
+    </>
+  );
+};
+
+export default Home;
