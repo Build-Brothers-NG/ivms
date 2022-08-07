@@ -183,18 +183,26 @@ const Home: NextPage = () => {
                   Create account
                 </Typography>
               </Link>
+              <Typography sx={{ mx: 5 }} color="primary" variant="h5">
+                Or
+              </Typography>
+              <Link href="/book">
+                <Typography color="primary" variant="h5">
+                  Book A Visit
+                </Typography>
+              </Link>
             </Grid>
           </Grid>
         </Box>
         <Box sx={styles.image}></Box>
       </Box>
-      <Snackbar
+      {/* <Snackbar
         open={Boolean(message)}
         autoHideDuration={6000}
         onClose={() => setMessage(null)}
       >
         <Alert severity={message?.severity}>{message?.message}</Alert>
-      </Snackbar>
+      </Snackbar> */}
     </>
   );
 };

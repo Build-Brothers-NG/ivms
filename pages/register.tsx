@@ -224,6 +224,14 @@ const Register: NextPage = () => {
                   Login
                 </Typography>
               </Link>
+              <Typography sx={{ mx: 5 }} color="primary" variant="h5">
+                Or
+              </Typography>
+              <Link href="/book">
+                <Typography color="primary" variant="h5">
+                  Book A Visit
+                </Typography>
+              </Link>
             </Grid>
           </Grid>
         </Box>
