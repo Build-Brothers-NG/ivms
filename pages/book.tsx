@@ -17,6 +17,9 @@ import Alert from "@mui/material/Alert";
 import { Formik } from "formik";
 
 import * as Yup from "yup";
+import { bookVisit } from "../src/backend/booking";
+import { GlobalState } from "../src/Global";
+import { handleSignInAnonymously } from "../src/backend/authentication";
 // import { getProfile, updateProfile } from "../../src/backend/profile";
 // import { MessageType } from "../register";
 
@@ -60,49 +63,22 @@ const initValues = {
 };
 
 const Book: NextPage = () => {
-  //   const { user } = React.useContext(GlobalState);
   const [loading, setLoading] = React.useState<boolean>(false);
   const [message, setMessage] = React.useState<any>(null);
-
-  //   const handleGetProfile = async (email: string) => {
-  //     const response: any = await getProfile(email);
-  //     if (response?.ok && response.user) {
-  //       let tmp: any = {};
-  //       Object.keys(initValues).forEach((key) => {
-  //         tmp[key] = response.user[key];
-  //       });
-  //       setInitValues({ ...initValues, ...tmp });
-  //     }
-  //   };
+  const { user } = React.useContext(GlobalState);
 
   const handleSubmitForm = async (values: any) => {
     setLoading(true);
-    //   await updateProfile(values)
-    //     .then(() => {
-    //       setMessage({ message: "Profile Updated", severity: "success" });
-    //     })
-    //     .catch((error) => {
-    //       setMessage({ message: error.message, severity: "error" });
-    //     })
-    //     .finally(() => {
-    //       setLoading(false);
-    //     });
+    await bookVisit(values)
+      .then(() => {
+        setMessage({ message: "Booking Requested", severity: "success" });
+      })
+      .catch((error) => {
+        setMessage({ message: error.message, severity: "error" });
+      })
+      .finally(() => setLoading(false));
   };
 
-  //   React.useEffect(() => {
-  //     if (user) {
-  //       setInitValues({
-  //         ...initValues,
-  //         fullName: user.displayName,
-  //         email: user.email,
-  //       });
-  //       handleGetProfile(user.email);
-  //     }
-  //   }, [user]);
-
-  //   if (!user) {
-  //     return null;
-  //   }
   return (
     <>
       <Container>
@@ -403,7 +379,6 @@ const Book: NextPage = () => {
                       onClick={() => handleSubmit()}
                       variant="contained"
                       loading={loading}
-                      loadingPosition="end"
                       loadingIndicator="Booking......"
                       disableElevation
                       fullWidth

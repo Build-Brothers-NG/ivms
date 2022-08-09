@@ -1,6 +1,7 @@
 import React from "react";
-import { getAuth, onAuthStateChanged, UserInfo } from "firebase/auth";
+import { onAuthStateChanged, UserInfo } from "firebase/auth";
 import { auth } from "../Libs/firebase";
+import { handleSignInAnonymously } from "../backend/authentication";
 
 const GlobalState: any = React.createContext({ user: null });
 
@@ -8,10 +9,11 @@ const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = React.useState<UserInfo | null>(null);
 
   React.useEffect(() => {
-    onAuthStateChanged(auth, (_user) => {
+    onAuthStateChanged(auth, async (_user) => {
       if (_user) {
         setUser(_user);
       } else {
+        await handleSignInAnonymously();
       }
     });
   }, []);

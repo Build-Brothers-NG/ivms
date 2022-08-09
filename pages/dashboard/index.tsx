@@ -50,7 +50,7 @@ const Dashboard: NextPage = () => {
 
   React.useEffect(() => {
     if (user) {
-      handleCheckProfile(user.email);
+      handleCheckProfile(user.email || user.uid);
     }
   }, [user]);
 

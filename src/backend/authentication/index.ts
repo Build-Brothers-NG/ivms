@@ -5,6 +5,7 @@ import {
   updateProfile,
   GoogleAuthProvider,
   signInWithPopup,
+  signInAnonymously,
 } from "firebase/auth";
 
 const provider = new GoogleAuthProvider();
@@ -20,6 +21,16 @@ export interface RegisterType extends AuthType {
   confirmPassword?: string;
 }
 
+const handleSignInAnonymously = async () => {
+  try {
+    const data = await signInAnonymously(auth);
+    if (data.user) {
+      return { ok: true, user: data.user, messsage: "Login Successfully" };
+    }
+  } catch (error: any) {
+    return { ok: false, problem: error.code, message: error.message };
+  }
+};
 const handleLogin = async ({ email, password }: AuthType) => {
   try {
     const data = await signInWithEmailAndPassword(auth, email, password);
@@ -76,4 +87,10 @@ const logOut = async ({ callback }: { callback: any }) => {
     .catch((error) => {});
 };
 
-export { handleLogin, handleRegister, logOut, handleGoogleSignin };
+export {
+  handleLogin,
+  handleRegister,
+  logOut,
+  handleGoogleSignin,
+  handleSignInAnonymously,
+};
