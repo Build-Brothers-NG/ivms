@@ -112,6 +112,7 @@ const Dashboard: NextPage = () => {
             <Link style={{ textDecoration: "none" }} href="/dashboard/booking">
               <Button
                 color="success"
+                disabled={isVerified || isProfileComplete}
                 fullWidth
                 sx={styles.button}
                 variant="contained"

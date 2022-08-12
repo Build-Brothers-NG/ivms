@@ -1,6 +1,6 @@
 import React from "react";
 import Typography from "@mui/material/Typography";
-import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 
 const styles = {
@@ -11,7 +11,7 @@ const styles = {
   },
 };
 
-const HistoryList = ({ data }: { data: any }) => {
+const VisitList = ({ data }: { data: any }) => {
   return (
     <>
       <Grid
@@ -62,9 +62,41 @@ const HistoryList = ({ data }: { data: any }) => {
             {data.visited ? <>Yes</> : <>No</>}
           </Typography>
         </Grid>
+        <Grid item container xs={12} md={6} spacing={1}>
+          <Grid item xs={12} md={3}>
+            <Button
+              disabled={data.isApproved}
+              fullWidth
+              variant="contained"
+              disableElevation
+            >
+              Approve
+            </Button>
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <Button
+              disabled={data.isDeclined}
+              fullWidth
+              variant="outlined"
+              disableElevation
+            >
+              Decline
+            </Button>
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Button
+              disabled={!data.isApproved}
+              fullWidth
+              variant="outlined"
+              disableElevation
+            >
+              Mark Visited
+            </Button>
+          </Grid>
+        </Grid>
       </Grid>
     </>
   );
 };
 
-export default HistoryList;
+export default VisitList;

@@ -7,13 +7,32 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import HistoryList from "../../src/components/HistoryList";
+import { getUserBookings } from "../../src/backend/booking";
+import { GlobalState } from "../../src/Global";
 
 const History: NextPage = () => {
   const [value, setValue] = React.useState("1");
+  const [history, setHistory] = React.useState<any[]>([]);
+
+  const { user } = React.useContext(GlobalState);
 
   const handleChange = (event: any, newValue: any) => {
     setValue(newValue);
   };
+  const handleGetBookings = async (email: string) => {
+    const response: any = await getUserBookings(email);
+    if (response.ok) {
+      setHistory(response.bookings);
+    } else {
+      console.log(response);
+    }
+  };
+
+  React.useEffect(() => {
+    if (user) {
+      handleGetBookings(user.email);
+    }
+  }, [user]);
 
   return (
     <>
@@ -32,14 +51,31 @@ const History: NextPage = () => {
               </TabList>
             </Box>
             <TabPanel value="1">
-              <HistoryList />
-              <HistoryList />
-              <HistoryList />
-              <HistoryList />
+              {history.map((data: any, index: number) => {
+                return <HistoryList key={index} data={data} />;
+              })}
             </TabPanel>
-            <TabPanel value="2">Item Two</TabPanel>
-            <TabPanel value="3">Item Three</TabPanel>
-            <TabPanel value="4">Item Three</TabPanel>
+            <TabPanel value="2">
+              {history
+                .filter((h) => h.isApproved === false && h.isDeclined === false)
+                .map((data: any, index: number) => {
+                  return <HistoryList key={index} data={data} />;
+                })}
+            </TabPanel>
+            <TabPanel value="3">
+              {history
+                .filter((h) => h.isApproved === true)
+                .map((data: any, index: number) => {
+                  return <HistoryList key={index} data={data} />;
+                })}
+            </TabPanel>
+            <TabPanel value="4">
+              {history
+                .filter((h) => h.isDeclined === true)
+                .map((data: any, index: number) => {
+                  return <HistoryList key={index} data={data} />;
+                })}
+            </TabPanel>
           </TabContext>
         </Box>
       </Container>
