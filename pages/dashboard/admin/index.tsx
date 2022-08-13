@@ -7,17 +7,24 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import VisitList from "../../../src/components/VisitList";
-import { getBookings } from "../../../src/backend/booking";
+import { getBookings, updateBooking } from "../../../src/backend/booking";
 import { GlobalState } from "../../../src/Global";
+import InfoModal from "../../../src/components/InfoModal";
 
 const Admin: NextPage = () => {
   const [value, setValue] = React.useState("1");
   const [bookings, setBookings] = React.useState<any[]>([]);
+  const [open, setOpen] = React.useState<boolean>(false);
+  const [data, setData] = React.useState<any>(null);
 
   const { user } = React.useContext(GlobalState);
 
   const handleChange = (event: any, newValue: any) => {
     setValue(newValue);
+  };
+
+  const handleShowInfo = (data: any) => {
+    setData(data);
   };
 
   const handleGetBookings = async () => {
@@ -27,6 +34,16 @@ const Admin: NextPage = () => {
     } else {
       console.log(response.message);
     }
+  };
+
+  const handleUpdateBooking = async (visit: any, id: string) => {
+    await updateBooking(visit, id)
+      .then(() => {
+        handleGetBookings();
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   React.useEffect(() => {
@@ -53,7 +70,14 @@ const Admin: NextPage = () => {
             </Box>
             <TabPanel value="1">
               {bookings.map((data: any, index: number) => {
-                return <VisitList key={index} data={data} />;
+                return (
+                  <VisitList
+                    handleShowInfo={handleShowInfo}
+                    handleUpdateBooking={handleUpdateBooking}
+                    key={index}
+                    data={data}
+                  />
+                );
               })}
             </TabPanel>
             <TabPanel value="2">
@@ -63,26 +87,52 @@ const Admin: NextPage = () => {
                     booking.isApproved === false && booking.isDeclined === false
                 )
                 .map((data: any, index: number) => {
-                  return <VisitList key={index} data={data} />;
+                  return (
+                    <VisitList
+                      handleShowInfo={handleShowInfo}
+                      handleUpdateBooking={handleUpdateBooking}
+                      key={index}
+                      data={data}
+                    />
+                  );
                 })}
             </TabPanel>
             <TabPanel value="3">
               {bookings
                 .filter((booking) => booking.isApproved === true)
                 .map((data: any, index: number) => {
-                  return <VisitList key={index} data={data} />;
+                  return (
+                    <VisitList
+                      handleShowInfo={handleShowInfo}
+                      handleUpdateBooking={handleUpdateBooking}
+                      key={index}
+                      data={data}
+                    />
+                  );
                 })}
             </TabPanel>
             <TabPanel value="4">
               {bookings
                 .filter((booking) => booking.isDeclined === true)
                 .map((data: any, index: number) => {
-                  return <VisitList key={index} data={data} />;
+                  return (
+                    <VisitList
+                      handleShowInfo={handleShowInfo}
+                      handleUpdateBooking={handleUpdateBooking}
+                      key={index}
+                      data={data}
+                    />
+                  );
                 })}
             </TabPanel>
           </TabContext>
         </Box>
       </Container>
+      <InfoModal
+        data={data}
+        open={Boolean(data)}
+        handleClose={() => setData(null)}
+      />
     </>
   );
 };

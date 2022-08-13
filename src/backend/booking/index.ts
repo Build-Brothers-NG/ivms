@@ -35,6 +35,25 @@ const bookVisit = async (data: any) => {
     return { ok: false, message: error.message };
   }
 };
+const updateBooking = async (data: any, id: string) => {
+  const user: UserInfo = auth.currentUser;
+  try {
+    if (user) {
+      const response = await setDoc(
+        doc(db, "bookings", id),
+        {
+          ...data,
+          updatedAt: new Date().getTime(),
+        },
+        {
+          merge: true,
+        }
+      );
+    }
+  } catch (error: any) {
+    return { ok: false, message: error.message };
+  }
+};
 
 const getUserBookings = async (email: string) => {
   try {
@@ -44,7 +63,11 @@ const getUserBookings = async (email: string) => {
     querySnapshot.forEach((doc) => {
       _data.push(doc.data());
     });
-    return { bookings: _data, ok: true };
+
+    return {
+      bookings: _data.sort((a: any, b: any) => b.createdAt - a.createdAt),
+      ok: true,
+    };
   } catch (e: any) {
     return { message: e.message, ok: false };
   }
@@ -55,9 +78,12 @@ const getBookings = async () => {
     const docSnap = await getDocs(collection(db, "bookings"));
     const _data: any = [];
     docSnap.forEach((doc) => {
-      _data.push(doc.data());
+      _data.push({ ...doc.data(), id: doc.id });
     });
-    return { bookings: _data, ok: true };
+    return {
+      bookings: _data.sort((a: any, b: any) => b.createdAt - a.createdAt),
+      ok: true,
+    };
   } catch (error: any) {
     return { ok: false, message: error.message };
   }
@@ -77,4 +103,4 @@ const getBooking = async (id: string) => {
   }
 };
 
-export { bookVisit, getBookings, getBooking, getUserBookings };
+export { bookVisit, getBookings, getBooking, getUserBookings, updateBooking };

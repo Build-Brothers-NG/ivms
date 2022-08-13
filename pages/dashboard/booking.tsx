@@ -253,11 +253,9 @@ const Booking: NextPage = () => {
                           Boolean(touched["familyAwareness"])
                         }
                         value={values["familyAwareness"]}
-                        // value={age}
-                        // onChange={handleChange}
                       >
-                        <MenuItem value={1}>Yes</MenuItem>
-                        <MenuItem value={2}>No</MenuItem>
+                        <MenuItem value={"Yes"}>Yes</MenuItem>
+                        <MenuItem value={"No"}>No</MenuItem>
                       </Select>
                     </FormControl>
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
