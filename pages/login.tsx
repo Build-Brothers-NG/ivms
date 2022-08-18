@@ -63,10 +63,8 @@ const initialValues: AuthType = {
 const Home: NextPage = () => {
   const [loading, setLoading] = React.useState<boolean>(false);
   const [message, setMessage] = React.useState<MessageType | null>(null);
-
-  const { language } = React.useContext(GlobalState);
   const router = useRouter();
-
+  const locale: any = router.locale;
   const handlePop = async () => {
     setLoading(true);
     const response: any = await handleGoogleSignin();
@@ -107,12 +105,12 @@ const Home: NextPage = () => {
           <Grid container spacing={5}>
             <Grid item xs={12}>
               <Typography color="primary" variant="h3">
-                {locales[language].title}
+                {locales[locale].title}
               </Typography>
             </Grid>
             <Grid item xs={12}>
               <Typography color="primary" variant="h4">
-                {locales[language].login}
+                {locales[locale].login}
               </Typography>
             </Grid>
             <Formik
@@ -139,7 +137,7 @@ const Home: NextPage = () => {
                       helperText={errors["email"]}
                       fullWidth
                       variant="filled"
-                      label={locales[language].emailAddress}
+                      label={locales[locale].emailAddress}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -154,7 +152,7 @@ const Home: NextPage = () => {
                       type="password"
                       fullWidth
                       variant="filled"
-                      label={locales[language].password}
+                      label={locales[locale].password}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -167,7 +165,7 @@ const Home: NextPage = () => {
                       variant="contained"
                       disableElevation
                     >
-                      {locales[language].login}
+                      {locales[locale].login}
                     </LoadingButton>
                   </Grid>
                 </>
@@ -184,15 +182,15 @@ const Home: NextPage = () => {
             <Grid item xs={12} container justifyContent="center">
               <Link href={"/register"}>
                 <Typography color="primary" variant="h5">
-                  {locales[language].register}
+                  {locales[locale].register}
                 </Typography>
               </Link>
               <Typography sx={{ mx: 5 }} color="primary" variant="h5">
-                {locales[language].or}
+                {locales[locale].or}
               </Typography>
               <Link href="/book">
                 <Typography color="primary" variant="h5">
-                  {locales[language].bookVisit}
+                  {locales[locale].bookVisit}
                 </Typography>
               </Link>
             </Grid>

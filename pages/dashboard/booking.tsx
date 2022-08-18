@@ -56,9 +56,10 @@ const Booking: NextPage = () => {
 
   const [profile, setProfile] = React.useState<any>({});
 
-  const { user, language } = React.useContext(GlobalState);
+  const { user } = React.useContext(GlobalState);
 
   const router = useRouter();
+  const locale: any = router.locale;
 
   const handleGetProfile = async (email: string) => {
     const response: any = await getProfile(email);
@@ -134,10 +135,10 @@ const Booking: NextPage = () => {
                       value={values["inmateName"]}
                       helperText={errors["inmateName"]}
                       variant="filled"
-                      label={locales[language].inmateName}
+                      label={locales[locale].inmateName}
                     />
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      {locales[language].inmateNameHint}.
+                      {locales[locale].inmateNameHint}.
                       <span className="important">*</span>
                     </Typography>
                   </Grid>
@@ -154,20 +155,20 @@ const Booking: NextPage = () => {
                       helperText={errors["inmateNumber"]}
                       variant="filled"
                       label={
-                        locales[language].inmateNumber +
+                        locales[locale].inmateNumber +
                         " (" +
-                        locales[language].optional +
+                        locales[locale].optional +
                         ")"
                       }
                     />
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      {locales[language].inmateNumberHint}
+                      {locales[locale].inmateNumberHint}
                     </Typography>
                   </Grid>
                   <Grid item xs={12} md={6}>
                     <FormControl variant="filled" fullWidth>
                       <InputLabel id="demo-simple-select-filled-label">
-                        {locales[language].visitRequest}
+                        {locales[locale].visitRequest}
                       </InputLabel>
                       <Select
                         labelId="demo-simple-select-filled-label"
@@ -187,15 +188,15 @@ const Booking: NextPage = () => {
                         // onChange={handleChange}
                       >
                         <MenuItem value={"One-Time Visit"}>
-                          {locales[language].oneTimeVisit}
+                          {locales[locale].oneTimeVisit}
                         </MenuItem>
                         <MenuItem value={"Regular Visit"}>
-                          {locales[language].regularVisit}
+                          {locales[locale].regularVisit}
                         </MenuItem>
                       </Select>
                     </FormControl>
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      {locales[language].visitRequestHint}
+                      {locales[locale].visitRequestHint}
                       <span className="important">*</span>
                     </Typography>
                   </Grid>
@@ -211,10 +212,10 @@ const Booking: NextPage = () => {
                       value={values["relationshipToInmate"]}
                       helperText={errors["relationshipToInmate"]}
                       variant="filled"
-                      label={locales[language].relationshipToInmate}
+                      label={locales[locale].relationshipToInmate}
                     />
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      {locales[language].relationshipToInmateHint}
+                      {locales[locale].relationshipToInmateHint}
                       <span className="important">*</span>
                     </Typography>
                   </Grid>
@@ -230,17 +231,17 @@ const Booking: NextPage = () => {
                       value={values["reasonForVisit"]}
                       helperText={errors["reasonForVisit"]}
                       variant="filled"
-                      label={locales[language].reasonForVisit}
+                      label={locales[locale].reasonForVisit}
                     />
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      {locales[language].reasonForVisitHint}
+                      {locales[locale].reasonForVisitHint}
                       <span className="important">*</span>
                     </Typography>
                   </Grid>
                   <Grid item xs={12} md={6}>
                     <FormControl variant="filled" fullWidth>
                       <InputLabel id="demo-simple-select-filled-label">
-                        {locales[language].requestSupportedByFamily}
+                        {locales[locale].requestSupportedByFamily}
                       </InputLabel>
                       <Select
                         labelId="demo-simple-select-filled-label"
@@ -258,16 +259,16 @@ const Booking: NextPage = () => {
                         // value={age}
                         // onChange={handleChange}
                       >
-                        <MenuItem value={locales[language].yes}>
-                          {locales[language].yes}
+                        <MenuItem value={locales[locale].yes}>
+                          {locales[locale].yes}
                         </MenuItem>
-                        <MenuItem value={locales[language].no}>
-                          {locales[language].no}
+                        <MenuItem value={locales[locale].no}>
+                          {locales[locale].no}
                         </MenuItem>
                       </Select>
                     </FormControl>
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      {locales[language].requestSupportedByFamilyHint}.{" "}
+                      {locales[locale].requestSupportedByFamilyHint}.{" "}
                       <span className="important">*</span>
                     </Typography>
                   </Grid>
@@ -276,12 +277,12 @@ const Booking: NextPage = () => {
                       onClick={() => handleSubmit()}
                       variant="contained"
                       loading={loading}
-                      loadingIndicator={locales[language].book + "..."}
+                      loadingIndicator={locales[locale].book + "..."}
                       disableElevation
                       fullWidth
                       sx={styles.button}
                     >
-                      {locales[language].book}
+                      {locales[locale].book}
                     </LoadingButton>
                   </Grid>
                 </>

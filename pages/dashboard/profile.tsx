@@ -18,6 +18,7 @@ import * as Yup from "yup";
 import { getProfile, updateProfile } from "../../src/backend/profile";
 import { MessageType } from "../register";
 import locales from "../../src/locales";
+import { useRouter } from "next/router";
 
 const styles = {
   box: { px: { xs: 1, md: "24px" }, my: 3 },
@@ -38,7 +39,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const Profile: NextPage = () => {
-  const { user, language } = React.useContext(GlobalState);
+  const { user } = React.useContext(GlobalState);
   const [loading, setLoading] = React.useState<boolean>(false);
   const [message, setMessage] = React.useState<MessageType | null>(null);
   const [initValues, setInitValues] = React.useState<any>({
@@ -49,7 +50,8 @@ const Profile: NextPage = () => {
     homeAddress: "",
     occupation: "",
   });
-
+  const router = useRouter();
+  const locale: any = router.locale;
   const handleGetProfile = async (email: string) => {
     const response: any = await getProfile(email);
     if (response?.ok && response.user) {
@@ -96,10 +98,10 @@ const Profile: NextPage = () => {
           <Grid container spacing={{ xs: 3, md: 5 }}>
             <Grid item xs={12}>
               <Typography color="primary" variant="h4">
-                {locales[language].completeProfile.split("👋")[0]}👋{" "}
+                {locales[locale].completeProfile.split("👋")[0]}👋{" "}
                 {user.displayName}
                 {", "}
-                {locales[language].completeProfile.split("👋")[1]}
+                {locales[locale].completeProfile.split("👋")[1]}
               </Typography>
             </Grid>
             <Formik
@@ -129,10 +131,10 @@ const Profile: NextPage = () => {
                       value={values["fullName"]}
                       helperText={errors["fullName"]}
                       variant="filled"
-                      label={locales[language].fullName}
+                      label={locales[locale].fullName}
                     />
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      {locales[language].fullNameHint}{" "}
+                      {locales[locale].fullNameHint}{" "}
                       <span className="important">*</span>
                     </Typography>
                   </Grid>
@@ -148,12 +150,10 @@ const Profile: NextPage = () => {
                       value={values["idNumber"]}
                       helperText={errors["idNumber"]}
                       variant="filled"
-                      label={
-                        locales[language].idNumber + " (NRIC/FIN/Passport)"
-                      }
+                      label={locales[locale].idNumber + " (NRIC/FIN/Passport)"}
                     />
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      {locales[language].idNumberHint}
+                      {locales[locale].idNumberHint}
                       <span className="important">*</span>
                     </Typography>
                   </Grid>
@@ -169,10 +169,10 @@ const Profile: NextPage = () => {
                       value={values["contactNumber"]}
                       helperText={errors["contactNumber"]}
                       variant="filled"
-                      label={locales[language].contactNumber}
+                      label={locales[locale].contactNumber}
                     />
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      {locales[language].contactNumberHint}{" "}
+                      {locales[locale].contactNumberHint}{" "}
                       <span className="important">*</span>
                     </Typography>
                   </Grid>
@@ -188,14 +188,14 @@ const Profile: NextPage = () => {
                       helperText={errors["email"]}
                       variant="filled"
                       label={
-                        locales[language].emailAddress +
+                        locales[locale].emailAddress +
                         " (" +
-                        locales[language].optional +
+                        locales[locale].optional +
                         ")"
                       }
                     />
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      {locales[language].emailAddressHint}
+                      {locales[locale].emailAddressHint}
                     </Typography>
                   </Grid>
                   <Grid item xs={12} md={6}>
@@ -210,10 +210,10 @@ const Profile: NextPage = () => {
                       value={values["homeAddress"]}
                       helperText={errors["homeAddress"]}
                       variant="filled"
-                      label={locales[language].homeAddress}
+                      label={locales[locale].homeAddress}
                     />
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      {locales[language].homeAddressHint}{" "}
+                      {locales[locale].homeAddressHint}{" "}
                       <span className="important">*</span>
                     </Typography>
                   </Grid>
@@ -229,10 +229,10 @@ const Profile: NextPage = () => {
                       value={values["occupation"]}
                       helperText={errors["occupation"]}
                       variant="filled"
-                      label={locales[language].occupation}
+                      label={locales[locale].occupation}
                     />
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      {locales[language].occupationHint}{" "}
+                      {locales[locale].occupationHint}{" "}
                       <span className="important">*</span>
                     </Typography>
                   </Grid>

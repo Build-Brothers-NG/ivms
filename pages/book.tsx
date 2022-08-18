@@ -21,8 +21,7 @@ import { GlobalState } from "../src/Global";
 import { handleSignInAnonymously } from "../src/backend/authentication";
 import locales from "../src/locales";
 import Navbar from "../src/components/Navbar";
-// import { getProfile, updateProfile } from "../../src/backend/profile";
-// import { MessageType } from "../register";
+import { useRouter } from "next/router";
 
 const styles = {
   box: { px: { xs: 1, md: "24px" }, my: 3 },
@@ -66,7 +65,10 @@ const initValues = {
 const Book: NextPage = () => {
   const [loading, setLoading] = React.useState<boolean>(false);
   const [message, setMessage] = React.useState<any>(null);
-  const { user, language } = React.useContext(GlobalState);
+  const { user } = React.useContext(GlobalState);
+
+  const router = useRouter();
+  const locale: any = router.locale;
 
   const handleSubmitForm = async (values: any) => {
     setLoading(true);
@@ -88,12 +90,12 @@ const Book: NextPage = () => {
           <Grid container spacing={{ xs: 3, md: 5 }}>
             <Grid item xs={12}>
               <Typography color="primary" variant="h4">
-                {locales[language].completeProfile}
+                {locales[locale].completeProfile}
               </Typography>
             </Grid>
             <Grid item xs={12}>
               <Typography variant="h5" sx={{ wordWrap: "normal" }}>
-                {locales[language].personalInfo}
+                {locales[locale].personalInfo}
               </Typography>
             </Grid>
             <Formik
@@ -124,10 +126,10 @@ const Book: NextPage = () => {
                       value={values["fullName"]}
                       helperText={errors["fullName"]}
                       variant="filled"
-                      label={locales[language].fullName}
+                      label={locales[locale].fullName}
                     />
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      {locales[language].fullNameHint}{" "}
+                      {locales[locale].fullNameHint}{" "}
                       <span className="important">*</span>
                     </Typography>
                   </Grid>
@@ -143,12 +145,10 @@ const Book: NextPage = () => {
                       value={values["idNumber"]}
                       helperText={errors["idNumber"]}
                       variant="filled"
-                      label={
-                        locales[language].idNumber + " (NRIC/FIN/Passport)"
-                      }
+                      label={locales[locale].idNumber + " (NRIC/FIN/Passport)"}
                     />
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      {locales[language].idNumberHint}
+                      {locales[locale].idNumberHint}
                       <span className="important">*</span>
                     </Typography>
                   </Grid>
@@ -164,10 +164,10 @@ const Book: NextPage = () => {
                       value={values["contactNumber"]}
                       helperText={errors["contactNumber"]}
                       variant="filled"
-                      label={locales[language].contactNumber}
+                      label={locales[locale].contactNumber}
                     />
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      {locales[language].contactNumberHint}{" "}
+                      {locales[locale].contactNumberHint}{" "}
                       <span className="important">*</span>
                     </Typography>
                   </Grid>
@@ -183,14 +183,14 @@ const Book: NextPage = () => {
                       helperText={errors["email"]}
                       variant="filled"
                       label={
-                        locales[language].emailAddress +
+                        locales[locale].emailAddress +
                         " (" +
-                        locales[language].optional +
+                        locales[locale].optional +
                         ")"
                       }
                     />
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      {locales[language].emailAddressHint}
+                      {locales[locale].emailAddressHint}
                     </Typography>
                   </Grid>
                   <Grid item xs={12} md={6}>
@@ -205,10 +205,10 @@ const Book: NextPage = () => {
                       value={values["homeAddress"]}
                       helperText={errors["homeAddress"]}
                       variant="filled"
-                      label={locales[language].homeAddress}
+                      label={locales[locale].homeAddress}
                     />
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      {locales[language].homeAddressHint}{" "}
+                      {locales[locale].homeAddressHint}{" "}
                       <span className="important">*</span>
                     </Typography>
                   </Grid>
@@ -224,16 +224,16 @@ const Book: NextPage = () => {
                       value={values["occupation"]}
                       helperText={errors["occupation"]}
                       variant="filled"
-                      label={locales[language].occupation}
+                      label={locales[locale].occupation}
                     />
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      {locales[language].occupationHint}{" "}
+                      {locales[locale].occupationHint}{" "}
                       <span className="important">*</span>
                     </Typography>
                   </Grid>
                   <Grid item xs={12}>
                     <Typography variant="h5" sx={{ wordWrap: "normal" }}>
-                      {locales[language].inmateInfo}:
+                      {locales[locale].inmateInfo}:
                     </Typography>
                   </Grid>
                   <Grid item xs={12} md={6}>
@@ -248,10 +248,10 @@ const Book: NextPage = () => {
                       value={values["inmateName"]}
                       helperText={errors["inmateName"]}
                       variant="filled"
-                      label={locales[language].inmateName}
+                      label={locales[locale].inmateName}
                     />
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      {locales[language].inmateNameHint}.
+                      {locales[locale].inmateNameHint}.
                       <span className="important">*</span>
                     </Typography>
                   </Grid>
@@ -268,20 +268,20 @@ const Book: NextPage = () => {
                       helperText={errors["inmateNumber"]}
                       variant="filled"
                       label={
-                        locales[language].inmateNumber +
+                        locales[locale].inmateNumber +
                         " (" +
-                        locales[language].optional +
+                        locales[locale].optional +
                         ")"
                       }
                     />
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      {locales[language].inmateNumberHint}
+                      {locales[locale].inmateNumberHint}
                     </Typography>
                   </Grid>
                   <Grid item xs={12} md={6}>
                     <FormControl variant="filled" fullWidth>
                       <InputLabel id="demo-simple-select-filled-label">
-                        {locales[language].visitRequest}
+                        {locales[locale].visitRequest}
                       </InputLabel>
                       <Select
                         labelId="demo-simple-select-filled-label"
@@ -301,15 +301,15 @@ const Book: NextPage = () => {
                         // onChange={handleChange}
                       >
                         <MenuItem value={"One-Time Visit"}>
-                          {locales[language].oneTimeVisit}
+                          {locales[locale].oneTimeVisit}
                         </MenuItem>
                         <MenuItem value={"Regular Visit"}>
-                          {locales[language].regularVisit}
+                          {locales[locale].regularVisit}
                         </MenuItem>
                       </Select>
                     </FormControl>
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      {locales[language].visitRequestHint}
+                      {locales[locale].visitRequestHint}
                       <span className="important">*</span>
                     </Typography>
                   </Grid>
@@ -325,10 +325,10 @@ const Book: NextPage = () => {
                       value={values["relationshipToInmate"]}
                       helperText={errors["relationshipToInmate"]}
                       variant="filled"
-                      label={locales[language].relationshipToInmate}
+                      label={locales[locale].relationshipToInmate}
                     />
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      {locales[language].relationshipToInmateHint}
+                      {locales[locale].relationshipToInmateHint}
                       <span className="important">*</span>
                     </Typography>
                   </Grid>
@@ -344,17 +344,17 @@ const Book: NextPage = () => {
                       value={values["reasonForVisit"]}
                       helperText={errors["reasonForVisit"]}
                       variant="filled"
-                      label={locales[language].reasonForVisit}
+                      label={locales[locale].reasonForVisit}
                     />
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      {locales[language].reasonForVisitHint}
+                      {locales[locale].reasonForVisitHint}
                       <span className="important">*</span>
                     </Typography>
                   </Grid>
                   <Grid item xs={12} md={6}>
                     <FormControl variant="filled" fullWidth>
                       <InputLabel id="demo-simple-select-filled-label">
-                        {locales[language].requestSupportedByFamily}
+                        {locales[locale].requestSupportedByFamily}
                       </InputLabel>
                       <Select
                         labelId="demo-simple-select-filled-label"
@@ -372,16 +372,16 @@ const Book: NextPage = () => {
                         // value={age}
                         // onChange={handleChange}
                       >
-                        <MenuItem value={locales[language].yes}>
-                          {locales[language].yes}
+                        <MenuItem value={locales[locale].yes}>
+                          {locales[locale].yes}
                         </MenuItem>
-                        <MenuItem value={locales[language].no}>
-                          {locales[language].no}
+                        <MenuItem value={locales[locale].no}>
+                          {locales[locale].no}
                         </MenuItem>
                       </Select>
                     </FormControl>
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      {locales[language].requestSupportedByFamilyHint}.{" "}
+                      {locales[locale].requestSupportedByFamilyHint}.{" "}
                       <span className="important">*</span>
                     </Typography>
                   </Grid>
@@ -390,12 +390,12 @@ const Book: NextPage = () => {
                       onClick={() => handleSubmit()}
                       variant="contained"
                       loading={loading}
-                      loadingIndicator={locales[language].book + "..."}
+                      loadingIndicator={locales[locale].book + "..."}
                       disableElevation
                       fullWidth
                       sx={styles.button}
                     >
-                      {locales[language].book}
+                      {locales[locale].book}
                     </LoadingButton>
                   </Grid>
                 </>

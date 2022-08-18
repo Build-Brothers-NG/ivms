@@ -31,11 +31,13 @@ const styles = {
 };
 
 const Dashboard: NextPage = () => {
-  const { user, language } = React.useContext(GlobalState);
+  const { user } = React.useContext(GlobalState);
   const [isVerified, setIsVerified] = React.useState<boolean>(false);
   const [isProfileComplete, setIsProfileComplet] =
     React.useState<boolean>(true);
   const router = useRouter();
+  const locale: any = router.locale;
+
   const handleCheckProfile = async (email: string) => {
     const response = await getProfile(email);
     if (response.ok) {
@@ -124,7 +126,7 @@ const Dashboard: NextPage = () => {
                 disableElevation
                 endIcon={<ReceiptLongIcon />}
               >
-                {locales[language].bookVisit}
+                {locales[locale].bookVisit}
               </Button>
             </Link>
           </Grid>
