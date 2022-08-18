@@ -22,8 +22,11 @@
     "formik": "^2.2.9",
     "nanoid": "^4.0.0",
     "next": "latest",
+    "next-i18next": "^11.3.0",
     "react": "latest",
+    "react-cookie": "^4.1.1",
     "react-dom": "latest",
+    "universal-cookie": "^4.0.4",
     "yup": "^0.32.11"
   },
   "devDependencies": {

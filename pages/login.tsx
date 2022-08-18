@@ -22,6 +22,8 @@ import * as Yup from "yup";
 import LoadingButton from "@mui/lab/LoadingButton";
 
 import LoginIcon from "@mui/icons-material/Login";
+import { GlobalState } from "../src/Global";
+import locales from "../src/locales";
 
 const theme = createTheme();
 
@@ -61,6 +63,8 @@ const initialValues: AuthType = {
 const Home: NextPage = () => {
   const [loading, setLoading] = React.useState<boolean>(false);
   const [message, setMessage] = React.useState<MessageType | null>(null);
+
+  const { language } = React.useContext(GlobalState);
   const router = useRouter();
 
   const handlePop = async () => {
@@ -103,12 +107,12 @@ const Home: NextPage = () => {
           <Grid container spacing={5}>
             <Grid item xs={12}>
               <Typography color="primary" variant="h3">
-                Inmate VMS
+                {locales[language].title}
               </Typography>
             </Grid>
             <Grid item xs={12}>
               <Typography color="primary" variant="h4">
-                Login
+                {locales[language].login}
               </Typography>
             </Grid>
             <Formik
@@ -135,7 +139,7 @@ const Home: NextPage = () => {
                       helperText={errors["email"]}
                       fullWidth
                       variant="filled"
-                      label="Email Address"
+                      label={locales[language].emailAddress}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -150,7 +154,7 @@ const Home: NextPage = () => {
                       type="password"
                       fullWidth
                       variant="filled"
-                      label="Password"
+                      label={locales[language].password}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -163,7 +167,7 @@ const Home: NextPage = () => {
                       variant="contained"
                       disableElevation
                     >
-                      Login
+                      {locales[language].login}
                     </LoadingButton>
                   </Grid>
                 </>
@@ -180,15 +184,15 @@ const Home: NextPage = () => {
             <Grid item xs={12} container justifyContent="center">
               <Link href={"/register"}>
                 <Typography color="primary" variant="h5">
-                  Create account
+                  {locales[language].register}
                 </Typography>
               </Link>
               <Typography sx={{ mx: 5 }} color="primary" variant="h5">
-                Or
+                {locales[language].or}
               </Typography>
               <Link href="/book">
                 <Typography color="primary" variant="h5">
-                  Book A Visit
+                  {locales[language].bookVisit}
                 </Typography>
               </Link>
             </Grid>

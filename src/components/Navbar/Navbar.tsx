@@ -8,19 +8,39 @@ import IconButton from "@mui/material/IconButton";
 import Container from "@mui/material/Container";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+
 import Link from "../../Link";
 import { useRouter } from "next/router";
 import { auth } from "../../Libs/firebase";
 import { signOut } from "firebase/auth";
+import { GlobalState } from "../../Global";
 
 export default function Navbar() {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const { user, language, handleChangeLanguage } =
+    React.useContext(GlobalState);
   const router = useRouter();
+
   const logOut = async () => {
     signOut(auth)
       .then(() => {
         router.push("/");
       })
       .catch((error: any) => {});
+  };
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const changeLanguage = (lang: "en" | "fr") => {
+    handleChangeLanguage(lang);
+    handleClose();
   };
   return (
     <>
@@ -36,9 +56,42 @@ export default function Navbar() {
               </Link>
             </Typography>
 
-            <Button onClick={logOut} color="inherit">
-              Logout
+            {user && !user.isAnonymous ? (
+              <>
+                <Button onClick={logOut} color="inherit">
+                  Logout
+                </Button>
+                <Typography variant="h4" component="div">
+                  |
+                </Typography>{" "}
+              </>
+            ) : null}
+            <Button
+              id="basic-button"
+              aria-controls={open ? "basic-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleClick}
+              color="inherit"
+            >
+              Language ({language})
             </Button>
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{
+                "aria-labelledby": "basic-button",
+              }}
+            >
+              <MenuItem onClick={() => changeLanguage("en")}>
+                English (En)
+              </MenuItem>
+              <MenuItem onClick={() => changeLanguage("fr")}>
+                French (Fr)
+              </MenuItem>
+            </Menu>
           </Toolbar>
         </Container>
       </AppBar>

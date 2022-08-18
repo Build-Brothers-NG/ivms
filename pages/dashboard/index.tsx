@@ -16,6 +16,8 @@ import { GlobalState } from "../../src/Global";
 import { getProfile } from "../../src/backend/profile";
 import PendingIcon from "@mui/icons-material/Pending";
 import VerifiedIcon from "@mui/icons-material/Verified";
+import locales from "../../src/locales";
+import { useRouter } from "next/router";
 
 const styles = {
   box: {
@@ -29,11 +31,11 @@ const styles = {
 };
 
 const Dashboard: NextPage = () => {
-  const { user } = React.useContext(GlobalState);
+  const { user, language } = React.useContext(GlobalState);
   const [isVerified, setIsVerified] = React.useState<boolean>(false);
   const [isProfileComplete, setIsProfileComplet] =
     React.useState<boolean>(true);
-
+  const router = useRouter();
   const handleCheckProfile = async (email: string) => {
     const response = await getProfile(email);
     if (response.ok) {
@@ -51,6 +53,9 @@ const Dashboard: NextPage = () => {
   React.useEffect(() => {
     if (user) {
       handleCheckProfile(user.email || user.uid);
+      if (user.isAnonymous) {
+        router.push("/");
+      }
     }
   }, [user]);
 
@@ -119,7 +124,7 @@ const Dashboard: NextPage = () => {
                 disableElevation
                 endIcon={<ReceiptLongIcon />}
               >
-                Book Visit
+                {locales[language].bookVisit}
               </Button>
             </Link>
           </Grid>

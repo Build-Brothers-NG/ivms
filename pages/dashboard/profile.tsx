@@ -17,6 +17,7 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { getProfile, updateProfile } from "../../src/backend/profile";
 import { MessageType } from "../register";
+import locales from "../../src/locales";
 
 const styles = {
   box: { px: { xs: 1, md: "24px" }, my: 3 },
@@ -37,7 +38,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const Profile: NextPage = () => {
-  const { user } = React.useContext(GlobalState);
+  const { user, language } = React.useContext(GlobalState);
   const [loading, setLoading] = React.useState<boolean>(false);
   const [message, setMessage] = React.useState<MessageType | null>(null);
   const [initValues, setInitValues] = React.useState<any>({
@@ -95,7 +96,10 @@ const Profile: NextPage = () => {
           <Grid container spacing={{ xs: 3, md: 5 }}>
             <Grid item xs={12}>
               <Typography color="primary" variant="h4">
-                Hi, {user.displayName} 👋 complete your profile.
+                {locales[language].completeProfile.split("👋")[0]}👋{" "}
+                {user.displayName}
+                {", "}
+                {locales[language].completeProfile.split("👋")[1]}
               </Typography>
             </Grid>
             <Formik
@@ -125,10 +129,10 @@ const Profile: NextPage = () => {
                       value={values["fullName"]}
                       helperText={errors["fullName"]}
                       variant="filled"
-                      label="Full name"
+                      label={locales[language].fullName}
                     />
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      Please provide the full name of the applicant{" "}
+                      {locales[language].fullNameHint}{" "}
                       <span className="important">*</span>
                     </Typography>
                   </Grid>
@@ -144,10 +148,12 @@ const Profile: NextPage = () => {
                       value={values["idNumber"]}
                       helperText={errors["idNumber"]}
                       variant="filled"
-                      label="Identification number (NRIC/FIN/Passport)"
+                      label={
+                        locales[language].idNumber + " (NRIC/FIN/Passport)"
+                      }
                     />
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      Please provide the full NRIC no./ FIN/ Passport Number.
+                      {locales[language].idNumberHint}
                       <span className="important">*</span>
                     </Typography>
                   </Grid>
@@ -163,10 +169,10 @@ const Profile: NextPage = () => {
                       value={values["contactNumber"]}
                       helperText={errors["contactNumber"]}
                       variant="filled"
-                      label="Contact Number (Mobile Number is preferred)"
+                      label={locales[language].contactNumber}
                     />
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      You will recieve an SMS once your application is approved.
+                      {locales[language].contactNumberHint}{" "}
                       <span className="important">*</span>
                     </Typography>
                   </Grid>
@@ -181,12 +187,15 @@ const Profile: NextPage = () => {
                       value={values["email"]}
                       helperText={errors["email"]}
                       variant="filled"
-                      label="Email Address (optional)"
+                      label={
+                        locales[language].emailAddress +
+                        " (" +
+                        locales[language].optional +
+                        ")"
+                      }
                     />
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      Please provide a valid email address for notification of
-                      the outcome of this application if you do not have a valid
-                      Singapore mobile number.
+                      {locales[language].emailAddressHint}
                     </Typography>
                   </Grid>
                   <Grid item xs={12} md={6}>
@@ -201,10 +210,10 @@ const Profile: NextPage = () => {
                       value={values["homeAddress"]}
                       helperText={errors["homeAddress"]}
                       variant="filled"
-                      label="Home Address"
+                      label={locales[language].homeAddress}
                     />
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      Please provide a home address{" "}
+                      {locales[language].homeAddressHint}{" "}
                       <span className="important">*</span>
                     </Typography>
                   </Grid>
@@ -220,10 +229,10 @@ const Profile: NextPage = () => {
                       value={values["occupation"]}
                       helperText={errors["occupation"]}
                       variant="filled"
-                      label="Occupation"
+                      label={locales[language].occupation}
                     />
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      Please provide an occupation{" "}
+                      {locales[language].occupationHint}{" "}
                       <span className="important">*</span>
                     </Typography>
                   </Grid>
@@ -236,7 +245,7 @@ const Profile: NextPage = () => {
                       endIcon={<AccountCircleIcon />}
                       disableElevation
                       fullWidth
-                      sx={styles.button}
+                      sx={{ ...styles.button, justifyContent: "center" }}
                     >
                       Save
                     </LoadingButton>

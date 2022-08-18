@@ -21,6 +21,7 @@ import { getProfile } from "../../src/backend/profile";
 import { GlobalState } from "../../src/Global";
 import { useRouter } from "next/router";
 import { bookVisit } from "../../src/backend/booking";
+import locales from "../../src/locales";
 
 const validationSchema = Yup.object().shape({
   inmateName: Yup.string().required().label("Name of inmate"),
@@ -55,7 +56,7 @@ const Booking: NextPage = () => {
 
   const [profile, setProfile] = React.useState<any>({});
 
-  const { user } = React.useContext(GlobalState);
+  const { user, language } = React.useContext(GlobalState);
 
   const router = useRouter();
 
@@ -133,11 +134,10 @@ const Booking: NextPage = () => {
                       value={values["inmateName"]}
                       helperText={errors["inmateName"]}
                       variant="filled"
-                      label="Name of Inmate"
+                      label={locales[language].inmateName}
                     />
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      Please provide us with the full name of the inmate whom
-                      you are requesting to visit.
+                      {locales[language].inmateNameHint}.
                       <span className="important">*</span>
                     </Typography>
                   </Grid>
@@ -153,17 +153,21 @@ const Booking: NextPage = () => {
                       value={values["inmateNumber"]}
                       helperText={errors["inmateNumber"]}
                       variant="filled"
-                      label="Inmate Number (optional)"
+                      label={
+                        locales[language].inmateNumber +
+                        " (" +
+                        locales[language].optional +
+                        ")"
+                      }
                     />
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      Please provide us with the inmate number of the inmate you
-                      are requesting to visit
+                      {locales[language].inmateNumberHint}
                     </Typography>
                   </Grid>
                   <Grid item xs={12} md={6}>
                     <FormControl variant="filled" fullWidth>
                       <InputLabel id="demo-simple-select-filled-label">
-                        Visit request
+                        {locales[language].visitRequest}
                       </InputLabel>
                       <Select
                         labelId="demo-simple-select-filled-label"
@@ -183,16 +187,15 @@ const Booking: NextPage = () => {
                         // onChange={handleChange}
                       >
                         <MenuItem value={"One-Time Visit"}>
-                          One-Time Visit
+                          {locales[language].oneTimeVisit}
                         </MenuItem>
                         <MenuItem value={"Regular Visit"}>
-                          Regular Visit
+                          {locales[language].regularVisit}
                         </MenuItem>
                       </Select>
                     </FormControl>
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      Please indicate if the request is for a one-time visit or
-                      regular visit
+                      {locales[language].visitRequestHint}
                       <span className="important">*</span>
                     </Typography>
                   </Grid>
@@ -208,10 +211,10 @@ const Booking: NextPage = () => {
                       value={values["relationshipToInmate"]}
                       helperText={errors["relationshipToInmate"]}
                       variant="filled"
-                      label="Relationship to inmate"
+                      label={locales[language].relationshipToInmate}
                     />
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      Please indicate your relationship to the inmate
+                      {locales[language].relationshipToInmateHint}
                       <span className="important">*</span>
                     </Typography>
                   </Grid>
@@ -227,18 +230,17 @@ const Booking: NextPage = () => {
                       value={values["reasonForVisit"]}
                       helperText={errors["reasonForVisit"]}
                       variant="filled"
-                      label="Reason for Visit"
+                      label={locales[language].reasonForVisit}
                     />
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      Please state the reason for your request to visit
+                      {locales[language].reasonForVisitHint}
                       <span className="important">*</span>
                     </Typography>
                   </Grid>
                   <Grid item xs={12} md={6}>
                     <FormControl variant="filled" fullWidth>
                       <InputLabel id="demo-simple-select-filled-label">
-                        Is your request to visit supported by inmate's family
-                        member?
+                        {locales[language].requestSupportedByFamily}
                       </InputLabel>
                       <Select
                         labelId="demo-simple-select-filled-label"
@@ -253,29 +255,33 @@ const Booking: NextPage = () => {
                           Boolean(touched["familyAwareness"])
                         }
                         value={values["familyAwareness"]}
+                        // value={age}
+                        // onChange={handleChange}
                       >
-                        <MenuItem value={"Yes"}>Yes</MenuItem>
-                        <MenuItem value={"No"}>No</MenuItem>
+                        <MenuItem value={locales[language].yes}>
+                          {locales[language].yes}
+                        </MenuItem>
+                        <MenuItem value={locales[language].no}>
+                          {locales[language].no}
+                        </MenuItem>
                       </Select>
                     </FormControl>
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      Please note that the inmate's family member supporting
-                      your request to visit must be a registered visitor.{" "}
+                      {locales[language].requestSupportedByFamilyHint}.{" "}
                       <span className="important">*</span>
                     </Typography>
                   </Grid>
                   <Grid item xs={12} md={6}>
                     <LoadingButton
                       onClick={() => handleSubmit()}
-                      color="primary"
+                      variant="contained"
                       loading={loading}
-                      loadingIndicator={"Booking..."}
+                      loadingIndicator={locales[language].book + "..."}
+                      disableElevation
                       fullWidth
                       sx={styles.button}
-                      variant="contained"
-                      disableElevation
                     >
-                      Book
+                      {locales[language].book}
                     </LoadingButton>
                   </Grid>
                 </>

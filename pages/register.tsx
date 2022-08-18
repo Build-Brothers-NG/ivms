@@ -22,6 +22,8 @@ import {
 } from "../src/backend/authentication";
 import { LoadingButton } from "@mui/lab";
 import { useRouter } from "next/router";
+import { GlobalState } from "../src/Global";
+import locales from "../src/locales";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
@@ -74,7 +76,8 @@ const Register: NextPage = () => {
   const [loading, setLoading] = React.useState<boolean>(false);
   const [message, setMessage] = React.useState<MessageType | null>(null);
   const router = useRouter();
-
+  const locale: any = router.locale;
+  console.log(locale);
   const handlePop = async () => {
     setLoading(true);
     const response: any = await handleGoogleSignin();
@@ -115,12 +118,12 @@ const Register: NextPage = () => {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Typography color="primary" variant="h3">
-                Inmate VMS
+                {locales[locale].title}
               </Typography>
             </Grid>
             <Grid item xs={12}>
               <Typography color="primary" variant="h4">
-                Register
+                {locales[locale].register}
               </Typography>
             </Grid>
             <Formik
@@ -148,7 +151,7 @@ const Register: NextPage = () => {
                       helperText={errors["fullName"]}
                       fullWidth
                       variant="filled"
-                      label="Full Name"
+                      label={locales[locale].fullName}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -161,7 +164,7 @@ const Register: NextPage = () => {
                       helperText={errors["email"]}
                       fullWidth
                       variant="filled"
-                      label="Email Address"
+                      label={locales[locale].emailAddress}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -176,7 +179,7 @@ const Register: NextPage = () => {
                       type="password"
                       fullWidth
                       variant="filled"
-                      label="Password"
+                      label={locales[locale].password}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -191,7 +194,7 @@ const Register: NextPage = () => {
                       type="password"
                       fullWidth
                       variant="filled"
-                      label="Retype Password"
+                      label={locales[locale].retypePassword}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -204,7 +207,7 @@ const Register: NextPage = () => {
                       disableElevation
                       sx={{ width: "fit-content", px: 3, py: 2 }}
                     >
-                      Register
+                      {locales[locale].register}
                     </LoadingButton>
                   </Grid>
                 </>
@@ -221,15 +224,15 @@ const Register: NextPage = () => {
             <Grid item xs={12} container justifyContent="center">
               <Link href="/">
                 <Typography color="primary" variant="h5">
-                  Login
+                  {locales[locale].login}
                 </Typography>
               </Link>
               <Typography sx={{ mx: 5 }} color="primary" variant="h5">
-                Or
+                {locales[locale].or}
               </Typography>
               <Link href="/book">
                 <Typography color="primary" variant="h5">
-                  Book A Visit
+                  {locales[locale].bookVisit}
                 </Typography>
               </Link>
             </Grid>

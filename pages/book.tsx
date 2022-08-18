@@ -10,7 +10,6 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
-// import { GlobalState } from "../../src/Global";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 
@@ -20,6 +19,8 @@ import * as Yup from "yup";
 import { bookVisit } from "../src/backend/booking";
 import { GlobalState } from "../src/Global";
 import { handleSignInAnonymously } from "../src/backend/authentication";
+import locales from "../src/locales";
+import Navbar from "../src/components/Navbar";
 // import { getProfile, updateProfile } from "../../src/backend/profile";
 // import { MessageType } from "../register";
 
@@ -65,7 +66,7 @@ const initValues = {
 const Book: NextPage = () => {
   const [loading, setLoading] = React.useState<boolean>(false);
   const [message, setMessage] = React.useState<any>(null);
-  const { user } = React.useContext(GlobalState);
+  const { user, language } = React.useContext(GlobalState);
 
   const handleSubmitForm = async (values: any) => {
     setLoading(true);
@@ -81,17 +82,18 @@ const Book: NextPage = () => {
 
   return (
     <>
+      <Navbar />
       <Container>
         <Box sx={styles.box}>
           <Grid container spacing={{ xs: 3, md: 5 }}>
             <Grid item xs={12}>
               <Typography color="primary" variant="h4">
-                Hi, 👋 complete the form below to book a visit.
+                {locales[language].completeProfile}
               </Typography>
             </Grid>
             <Grid item xs={12}>
               <Typography variant="h5" sx={{ wordWrap: "normal" }}>
-                Your Personal Information:
+                {locales[language].personalInfo}
               </Typography>
             </Grid>
             <Formik
@@ -122,10 +124,10 @@ const Book: NextPage = () => {
                       value={values["fullName"]}
                       helperText={errors["fullName"]}
                       variant="filled"
-                      label="Full name"
+                      label={locales[language].fullName}
                     />
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      Please provide the full name of the applicant{" "}
+                      {locales[language].fullNameHint}{" "}
                       <span className="important">*</span>
                     </Typography>
                   </Grid>
@@ -141,10 +143,12 @@ const Book: NextPage = () => {
                       value={values["idNumber"]}
                       helperText={errors["idNumber"]}
                       variant="filled"
-                      label="Identification number (NRIC/FIN/Passport)"
+                      label={
+                        locales[language].idNumber + " (NRIC/FIN/Passport)"
+                      }
                     />
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      Please provide the full NRIC no./ FIN/ Passport Number.
+                      {locales[language].idNumberHint}
                       <span className="important">*</span>
                     </Typography>
                   </Grid>
@@ -160,10 +164,10 @@ const Book: NextPage = () => {
                       value={values["contactNumber"]}
                       helperText={errors["contactNumber"]}
                       variant="filled"
-                      label="Contact Number (Mobile Number is preferred)"
+                      label={locales[language].contactNumber}
                     />
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      You will recieve an SMS once your application is approved.
+                      {locales[language].contactNumberHint}{" "}
                       <span className="important">*</span>
                     </Typography>
                   </Grid>
@@ -178,12 +182,15 @@ const Book: NextPage = () => {
                       value={values["email"]}
                       helperText={errors["email"]}
                       variant="filled"
-                      label="Email Address (optional)"
+                      label={
+                        locales[language].emailAddress +
+                        " (" +
+                        locales[language].optional +
+                        ")"
+                      }
                     />
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      Please provide a valid email address for notification of
-                      the outcome of this application if you do not have a valid
-                      Singapore mobile number.
+                      {locales[language].emailAddressHint}
                     </Typography>
                   </Grid>
                   <Grid item xs={12} md={6}>
@@ -198,10 +205,10 @@ const Book: NextPage = () => {
                       value={values["homeAddress"]}
                       helperText={errors["homeAddress"]}
                       variant="filled"
-                      label="Home Address"
+                      label={locales[language].homeAddress}
                     />
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      Please provide a home address{" "}
+                      {locales[language].homeAddressHint}{" "}
                       <span className="important">*</span>
                     </Typography>
                   </Grid>
@@ -217,16 +224,16 @@ const Book: NextPage = () => {
                       value={values["occupation"]}
                       helperText={errors["occupation"]}
                       variant="filled"
-                      label="Occupation"
+                      label={locales[language].occupation}
                     />
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      Please provide an occupation{" "}
+                      {locales[language].occupationHint}{" "}
                       <span className="important">*</span>
                     </Typography>
                   </Grid>
                   <Grid item xs={12}>
                     <Typography variant="h5" sx={{ wordWrap: "normal" }}>
-                      Inmate Information:
+                      {locales[language].inmateInfo}:
                     </Typography>
                   </Grid>
                   <Grid item xs={12} md={6}>
@@ -241,11 +248,10 @@ const Book: NextPage = () => {
                       value={values["inmateName"]}
                       helperText={errors["inmateName"]}
                       variant="filled"
-                      label="Name of Inmate"
+                      label={locales[language].inmateName}
                     />
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      Please provide us with the full name of the inmate whom
-                      you are requesting to visit.
+                      {locales[language].inmateNameHint}.
                       <span className="important">*</span>
                     </Typography>
                   </Grid>
@@ -261,17 +267,21 @@ const Book: NextPage = () => {
                       value={values["inmateNumber"]}
                       helperText={errors["inmateNumber"]}
                       variant="filled"
-                      label="Inmate Number (optional)"
+                      label={
+                        locales[language].inmateNumber +
+                        " (" +
+                        locales[language].optional +
+                        ")"
+                      }
                     />
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      Please provide us with the inmate number of the inmate you
-                      are requesting to visit
+                      {locales[language].inmateNumberHint}
                     </Typography>
                   </Grid>
                   <Grid item xs={12} md={6}>
                     <FormControl variant="filled" fullWidth>
                       <InputLabel id="demo-simple-select-filled-label">
-                        Visit request
+                        {locales[language].visitRequest}
                       </InputLabel>
                       <Select
                         labelId="demo-simple-select-filled-label"
@@ -291,16 +301,15 @@ const Book: NextPage = () => {
                         // onChange={handleChange}
                       >
                         <MenuItem value={"One-Time Visit"}>
-                          One-Time Visit
+                          {locales[language].oneTimeVisit}
                         </MenuItem>
                         <MenuItem value={"Regular Visit"}>
-                          Regular Visit
+                          {locales[language].regularVisit}
                         </MenuItem>
                       </Select>
                     </FormControl>
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      Please indicate if the request is for a one-time visit or
-                      regular visit
+                      {locales[language].visitRequestHint}
                       <span className="important">*</span>
                     </Typography>
                   </Grid>
@@ -316,10 +325,10 @@ const Book: NextPage = () => {
                       value={values["relationshipToInmate"]}
                       helperText={errors["relationshipToInmate"]}
                       variant="filled"
-                      label="Relationship to inmate"
+                      label={locales[language].relationshipToInmate}
                     />
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      Please indicate your relationship to the inmate
+                      {locales[language].relationshipToInmateHint}
                       <span className="important">*</span>
                     </Typography>
                   </Grid>
@@ -335,18 +344,17 @@ const Book: NextPage = () => {
                       value={values["reasonForVisit"]}
                       helperText={errors["reasonForVisit"]}
                       variant="filled"
-                      label="Reason for Visit"
+                      label={locales[language].reasonForVisit}
                     />
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      Please state the reason for your request to visit
+                      {locales[language].reasonForVisitHint}
                       <span className="important">*</span>
                     </Typography>
                   </Grid>
                   <Grid item xs={12} md={6}>
                     <FormControl variant="filled" fullWidth>
                       <InputLabel id="demo-simple-select-filled-label">
-                        Is your request to visit supported by inmate's family
-                        member?
+                        {locales[language].requestSupportedByFamily}
                       </InputLabel>
                       <Select
                         labelId="demo-simple-select-filled-label"
@@ -364,13 +372,16 @@ const Book: NextPage = () => {
                         // value={age}
                         // onChange={handleChange}
                       >
-                        <MenuItem value={1}>Yes</MenuItem>
-                        <MenuItem value={2}>No</MenuItem>
+                        <MenuItem value={locales[language].yes}>
+                          {locales[language].yes}
+                        </MenuItem>
+                        <MenuItem value={locales[language].no}>
+                          {locales[language].no}
+                        </MenuItem>
                       </Select>
                     </FormControl>
                     <Typography variant="subtitle2" sx={{ wordWrap: "normal" }}>
-                      Please note that the inmate's family member supporting
-                      your request to visit must be a registered visitor.{" "}
+                      {locales[language].requestSupportedByFamilyHint}.{" "}
                       <span className="important">*</span>
                     </Typography>
                   </Grid>
@@ -379,12 +390,12 @@ const Book: NextPage = () => {
                       onClick={() => handleSubmit()}
                       variant="contained"
                       loading={loading}
-                      loadingIndicator="Booking......"
+                      loadingIndicator={locales[language].book + "..."}
                       disableElevation
                       fullWidth
                       sx={styles.button}
                     >
-                      Book
+                      {locales[language].book}
                     </LoadingButton>
                   </Grid>
                 </>
