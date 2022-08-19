@@ -62,7 +62,7 @@ const Home: NextPage = () => {
   const { user } = React.useContext(GlobalState);
 
   const router = useRouter();
-  const locale: any = router.locale;
+  const locale: any = cookies.language || router.locale;
 
   React.useEffect(() => {
     if (user) {
