@@ -13,6 +13,7 @@ const locales: any = {
     register: "register",
     fullName: "Full name",
     retypePassword: "Re-type password",
+    hi: "Hi",
     //
     // Complete Profile Page
     completeProfile: "Hi, 👋 complete the form below to book a visit.",
@@ -55,6 +56,17 @@ const locales: any = {
     yes: "YES",
     no: "NO",
     book: "BOOK",
+    //
+    //
+    peopleVisited: "People Visited",
+    viewHistory: "View History",
+    logout: "Logout",
+    //
+    //
+    profileVerified: "Your profile is Verified!",
+    profileAwaitingVerification: "Your profile is awaiting verification!",
+    completeYourProfile: "Complete your profile",
+    language: "Langue",
   },
   fr: {
     //
@@ -70,6 +82,7 @@ const locales: any = {
     register: "S'inscrire",
     fullName: "Nom et prénom",
     retypePassword: "Retaper le mot de passe",
+    hi: "Bonjour",
     //
     // Complete Profile Page
     completeProfile:
@@ -115,6 +128,18 @@ const locales: any = {
     yes: "OUI",
     no: "NON",
     book: "RESEVER",
+    //
+    //
+    peopleVisited: "Personnes Visitées",
+    viewHistory: "Voir l'historique",
+    //
+    //
+    logout: "Se déconnecter",
+    profileVerified: "Votre profil est Vérifié !",
+    profileAwaitingVerification:
+      "Votre profil est en attente de vérification !",
+    completeYourProfile: "complète ton profil",
+    language: "Language",
   },
 };
 

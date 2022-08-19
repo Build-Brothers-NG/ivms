@@ -16,18 +16,18 @@ import { useRouter } from "next/router";
 import { auth } from "../../Libs/firebase";
 import { signOut } from "firebase/auth";
 import { GlobalState } from "../../Global";
+import locales from "../../locales";
 
 export default function Navbar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const { user, language, handleChangeLanguage } =
-    React.useContext(GlobalState);
+  const { user, handleChangeLanguage } = React.useContext(GlobalState);
   const router = useRouter();
   const locale: any = router.locale;
 
   const logOut = async () => {
     signOut(auth)
       .then(() => {
-        router.push("/");
+        router.push("/login", { pathname: "/login" }, { locale });
       })
       .catch((error: any) => {});
   };
@@ -61,7 +61,7 @@ export default function Navbar() {
             {user && !user.isAnonymous ? (
               <>
                 <Button onClick={logOut} color="inherit">
-                  Logout
+                  {locales[locale].logout}
                 </Button>
                 <Typography variant="h4" component="div">
                   |
@@ -76,7 +76,7 @@ export default function Navbar() {
               onClick={handleClick}
               color="inherit"
             >
-              Language ({language})
+              {locales[locale].language} ({locale})
             </Button>
             <Menu
               id="basic-menu"

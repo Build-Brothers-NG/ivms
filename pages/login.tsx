@@ -72,7 +72,7 @@ const Home: NextPage = () => {
       setLoading(false);
       setMessage({ message: response.message, severity: "success" });
       setTimeout(() => {
-        router.push("/dashboard", {}, { locale });
+        router.push("/dashboard", { pathname: "/dashboard" }, { locale });
       }, 2000);
     } else {
       setLoading(false);
@@ -87,7 +87,7 @@ const Home: NextPage = () => {
       setLoading(false);
       setMessage({ message: response.message, severity: "success" });
       setTimeout(() => {
-        router.push("/dashboard", {}, { locale });
+        router.push("/dashboard", { pathname: "/dashboard" }, { locale });
       }, 2000);
     } else {
       setLoading(false);

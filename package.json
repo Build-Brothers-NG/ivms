@@ -26,7 +26,6 @@
     "react": "latest",
     "react-cookie": "^4.1.1",
     "react-dom": "latest",
-    "universal-cookie": "^4.0.4",
     "yup": "^0.32.11"
   },
   "devDependencies": {

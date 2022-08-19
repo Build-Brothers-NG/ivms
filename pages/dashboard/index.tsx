@@ -70,7 +70,7 @@ const Dashboard: NextPage = () => {
         <Grid container spacing={3} marginTop={3}>
           <Grid item xs={12}>
             <Typography color="primary" variant="h3">
-              Welcome {user.displayName} 👋
+              {locales[locale].hi}, 👋 {user.displayName}.
             </Typography>
           </Grid>
           <Grid item xs={12}>
@@ -84,7 +84,7 @@ const Dashboard: NextPage = () => {
                     disableElevation
                     startIcon={<VerifiedIcon />}
                   >
-                    Your profile Verified!
+                    {locales[locale].profileVerified}
                   </Button>
                 ) : (
                   <Button
@@ -94,7 +94,7 @@ const Dashboard: NextPage = () => {
                     disableElevation
                     startIcon={<PendingIcon />}
                   >
-                    Your profile is awaiting verification!
+                    {locales[locale].profileAwaitingVerification}
                   </Button>
                 )}
               </>
@@ -111,7 +111,7 @@ const Dashboard: NextPage = () => {
                   disableElevation
                   startIcon={<WarningIcon />}
                 >
-                  Complete your profile
+                  {locales[locale].completeYourProfile}
                 </Button>
               </Link>
             )}
@@ -149,7 +149,7 @@ const Dashboard: NextPage = () => {
                 disableElevation
                 endIcon={<HistoryIcon />}
               >
-                View History
+                {locales[locale].viewHistory}
               </Button>
             </Link>
           </Grid>
@@ -162,7 +162,7 @@ const Dashboard: NextPage = () => {
               disableElevation
               endIcon={<GroupIcon />}
             >
-              People Visited
+              {locales[locale].peopleVisited}
             </Button>
           </Grid>
         </Grid>

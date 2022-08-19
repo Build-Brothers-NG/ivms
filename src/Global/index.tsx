@@ -23,7 +23,7 @@ const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   React.useEffect(() => {
-    console.log(cookies.language);
+    router.push(router.pathname, router.asPath, { locale: cookies.language });
     onAuthStateChanged(auth, async (_user) => {
       if (_user) {
         setUser(_user);
