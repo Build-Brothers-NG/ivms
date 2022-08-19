@@ -14,6 +14,9 @@ import { createTheme } from "@mui/material/styles";
 import { Theme } from "@mui/system";
 
 import Link from "../src/Link";
+import { useCookies } from "react-cookie";
+import { useRouter } from "next/router";
+import { GlobalState } from "../src/Global";
 const theme = createTheme();
 
 const useStyle = makeStyles((theme: Theme) => ({
@@ -47,80 +50,48 @@ const useStyle = makeStyles((theme: Theme) => ({
 const styles = {
   root: {
     display: "flex",
-    justifyContent: "space-between",
-    width: "100%",
-  },
-  login: {
-    width: { xs: "100%", md: "50%" },
-    px: { xs: 20, md: 50 },
-    py: { xs: 20, md: 10 },
-  },
-  image: {
-    backgroundImage: "url(/static/images/inmate.jpg)",
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-    width: "50%",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100vw",
     height: "100vh",
-    [theme.breakpoints.down("sm")]: {
-      display: "none",
-    },
   },
 };
 
 const Home: NextPage = () => {
+  const [cookies, setCookie] = useCookies(["language"]);
+  const { user } = React.useContext(GlobalState);
+
+  const router = useRouter();
+  const locale: any = router.locale;
+
+  React.useEffect(() => {
+    if (user) {
+      if (user.isAnonymous) {
+        router.push("/login", {}, { locale });
+      } else {
+        router.push("/dashboard", {}, { locale });
+      }
+    }
+  }, [user]);
   return (
     <Box sx={styles.root}>
-      <Box sx={styles.login}>
-        <Grid container spacing={5}>
-          <Grid item xs={12}>
-            <Typography color="primary" variant="h3">
-              Inmate VMS
-            </Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Typography color="primary" variant="h4">
-              Login
-            </Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <TextField fullWidth variant="filled" label="Email Address" />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField fullWidth variant="filled" label="Password" />
-          </Grid>
-          <Grid item xs={12}>
-            <Button
-              sx={{ width: "fit-content", px: 3, py: 2 }}
-              variant="contained"
-              disableElevation
-            >
-              Login
-            </Button>
-          </Grid>
-          <Grid item xs={12}>
-            <Box component="img" src={"/static/images/btn_google_signin.png"} />
-          </Grid>
-          <Grid item xs={12}>
-            <Link href={"/register"}>
-              <Typography color="primary" variant="h5">
-                Create account
-              </Typography>
-            </Link>
-          </Grid>
-        </Grid>
-      </Box>
-      <Box sx={styles.image}></Box>
+      <div className="lds-ring">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
     </Box>
   );
 };
 
 export default Home;
 
-export const getServerSideProps = async () => {
-  return {
-    redirect: {
-      destination: "/login",
-      parmanent: false,
-    },
-  };
-};
+// export const getServerSideProps = async () => {
+//   return {
+//     redirect: {
+//       destination: "/login",
+//       parmanent: false,
+//     },
+//   };
+// };

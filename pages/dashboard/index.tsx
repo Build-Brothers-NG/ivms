@@ -102,6 +102,7 @@ const Dashboard: NextPage = () => {
               <Link
                 style={{ textDecoration: "none" }}
                 href="/dashboard/profile"
+                locale={locale}
               >
                 <Button
                   color="warning"
@@ -116,7 +117,11 @@ const Dashboard: NextPage = () => {
             )}
           </Grid>
           <Grid item xs={12} md={6}>
-            <Link style={{ textDecoration: "none" }} href="/dashboard/booking">
+            <Link
+              style={{ textDecoration: "none" }}
+              href="/dashboard/booking"
+              locale={locale}
+            >
               <Button
                 color="success"
                 disabled={isVerified || isProfileComplete}
@@ -131,7 +136,11 @@ const Dashboard: NextPage = () => {
             </Link>
           </Grid>
           <Grid item xs={12} md={6}>
-            <Link style={{ textDecoration: "none" }} href="/dashboard/history">
+            <Link
+              style={{ textDecoration: "none" }}
+              href="/dashboard/history"
+              locale={locale}
+            >
               <Button
                 color="info"
                 fullWidth

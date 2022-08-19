@@ -22,6 +22,7 @@ export default function Navbar() {
   const { user, language, handleChangeLanguage } =
     React.useContext(GlobalState);
   const router = useRouter();
+  const locale: any = router.locale;
 
   const logOut = async () => {
     signOut(auth)
@@ -49,8 +50,9 @@ export default function Navbar() {
           <Toolbar>
             <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
               <Link
-                href="/dashboard"
+                href={user && user.isAnonymous ? "/" : "/dashboard"}
                 style={{ textDecoration: "none", color: "inherit" }}
+                locale={locale}
               >
                 IVMS
               </Link>

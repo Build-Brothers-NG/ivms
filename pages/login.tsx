@@ -72,8 +72,8 @@ const Home: NextPage = () => {
       setLoading(false);
       setMessage({ message: response.message, severity: "success" });
       setTimeout(() => {
-        router.push("/dashboard");
-      }, 3000);
+        router.push("/dashboard", {}, { locale });
+      }, 2000);
     } else {
       setLoading(false);
       setMessage({ message: response.message, severity: "error" });
@@ -87,8 +87,8 @@ const Home: NextPage = () => {
       setLoading(false);
       setMessage({ message: response.message, severity: "success" });
       setTimeout(() => {
-        router.push("/dashboard");
-      }, 3000);
+        router.push("/dashboard", {}, { locale });
+      }, 2000);
     } else {
       setLoading(false);
       setMessage({ message: response.message, severity: "error" });

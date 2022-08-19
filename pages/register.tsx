@@ -77,7 +77,6 @@ const Register: NextPage = () => {
   const [message, setMessage] = React.useState<MessageType | null>(null);
   const router = useRouter();
   const locale: any = router.locale;
-  console.log(locale);
   const handlePop = async () => {
     setLoading(true);
     const response: any = await handleGoogleSignin();
@@ -85,8 +84,8 @@ const Register: NextPage = () => {
       setLoading(false);
       setMessage({ message: response.message, severity: "success" });
       setTimeout(() => {
-        router.push("/dashboard");
-      }, 3000);
+        router.push("/dashboard", {}, { locale });
+      }, 2000);
     } else {
       setLoading(false);
       setMessage({ message: response.message, severity: "error" });
@@ -100,8 +99,8 @@ const Register: NextPage = () => {
       setLoading(false);
       setMessage({ message: response.message, severity: "success" });
       setTimeout(() => {
-        router.push("/dashboard");
-      }, 3000);
+        router.push("/dashboard", {}, { locale });
+      }, 2000);
     } else {
       setLoading(false);
       setMessage({ message: response.message, severity: "error" });
@@ -222,7 +221,7 @@ const Register: NextPage = () => {
               />
             </Grid>
             <Grid item xs={12} container justifyContent="center">
-              <Link href="/">
+              <Link href="/" locale={locale}>
                 <Typography color="primary" variant="h5">
                   {locales[locale].login}
                 </Typography>
@@ -230,7 +229,7 @@ const Register: NextPage = () => {
               <Typography sx={{ mx: 5 }} color="primary" variant="h5">
                 {locales[locale].or}
               </Typography>
-              <Link href="/book">
+              <Link href="/book" locale={locale}>
                 <Typography color="primary" variant="h5">
                   {locales[locale].bookVisit}
                 </Typography>

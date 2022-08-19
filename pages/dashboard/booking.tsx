@@ -74,8 +74,8 @@ const Booking: NextPage = () => {
       .then(() => {
         setMessage({ message: "Booking Requested", severity: "success" });
         setTimeout(() => {
-          router.push("/dashboard");
-        }, 3000);
+          router.push("/dashboard", {}, { locale });
+        }, 2000);
       })
       .catch((error) => {
         setMessage({ message: error.message, severity: "error" });
@@ -86,7 +86,7 @@ const Booking: NextPage = () => {
   React.useEffect(() => {
     if (user) {
       if (user.isAnonymouse) {
-        router.push("/book");
+        router.push("/book", {}, { locale });
       } else {
         handleGetProfile(user.email);
       }
@@ -104,7 +104,9 @@ const Booking: NextPage = () => {
           <Grid container spacing={{ xs: 3, md: 5 }}>
             <Grid item xs={12}>
               <Typography color="primary" variant="h4">
-                Hi, 👋 {user.displayName}. Who are you trying to visit?
+                {locales[locale].completeProfile.split("👋")[0]} 👋
+                {user.displayName}.{" "}
+                {locales[locale].completeProfile.split("👋")[1]}
               </Typography>
             </Grid>
             <Formik
