@@ -70,7 +70,7 @@ const Dashboard: NextPage = () => {
         <Grid container spacing={3} marginTop={3}>
           <Grid item xs={12}>
             <Typography color="primary" variant="h3">
-              {locales[locale].hi}, 👋 {user.displayName}.
+              {locales[locale].welcome}, 👋 {user.displayName}.
             </Typography>
           </Grid>
           <Grid item xs={12}>

@@ -108,7 +108,7 @@ export default function Navbar() {
             return (
               route && (
                 <Typography key={route} sx={{ textTransform: "capitalize" }}>
-                  {route}
+                  {locales[locale][route]}
                 </Typography>
               )
             );

@@ -2,6 +2,8 @@ import React from "react";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Grid from "@mui/material/Grid";
+import { useRouter } from "next/router";
+import locales from "../../locales";
 
 const styles = {
   root: {
@@ -12,6 +14,8 @@ const styles = {
 };
 
 const HistoryList = ({ data }: { data: any }) => {
+  const router = useRouter();
+  const locale: any = router.locale;
   return (
     <>
       <Grid
@@ -28,7 +32,7 @@ const HistoryList = ({ data }: { data: any }) => {
       >
         <Grid item xs={12} md={3}>
           <Typography color="primary" variant="h6">
-            Inmate
+            {locales[locale].inmate}
           </Typography>
           <Typography variant="subtitle1">{data.inmateName}</Typography>
         </Grid>
@@ -42,24 +46,28 @@ const HistoryList = ({ data }: { data: any }) => {
         </Grid>
         <Grid item xs={12} md={3}>
           <Typography color="primary" variant="h6">
-            Status
+            {locales[locale].status}
           </Typography>
           <Typography variant="subtitle1">
             {data.isApproved ? (
-              <>Approved</>
+              <>{locales[locale].approved}</>
             ) : data.isDeclined ? (
-              <>Declined</>
+              <>{locales[locale].decline}</>
             ) : (
-              <>Unapproved</>
+              <>{locales[locale].decline}</>
             )}
           </Typography>
         </Grid>
         <Grid item xs={12} md={3}>
           <Typography color="primary" variant="h6">
-            Visited
+            {locales[locale].visited}
           </Typography>
           <Typography variant="subtitle1">
-            {data.visited ? <>Yes</> : <>No</>}
+            {data.visited ? (
+              <>{locales[locale].yes}</>
+            ) : (
+              <>{locales[locale].no}</>
+            )}
           </Typography>
         </Grid>
       </Grid>

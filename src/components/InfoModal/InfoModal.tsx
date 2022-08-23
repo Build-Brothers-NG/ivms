@@ -7,6 +7,8 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import { useRouter } from "next/router";
+import locales from "../../locales";
 
 const InfoModal = ({
   open,
@@ -18,6 +20,9 @@ const InfoModal = ({
   data: any;
 }) => {
   const [scroll, setScroll] = React.useState<DialogProps["scroll"]>("paper");
+
+  const router = useRouter();
+  const locale: any = router.locale;
 
   const descriptionElementRef = React.useRef<HTMLElement>(null);
   React.useEffect(() => {
@@ -54,17 +59,19 @@ const InfoModal = ({
                 }}
               >
                 <Grid item xs={12}>
-                  <Typography variant="h4">Visitors Information</Typography>
+                  <Typography variant="h4">
+                    {locales[locale].visitorsInformation}
+                  </Typography>
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <Typography color="primary" variant="h6">
-                    Full Name
+                    {locales[locale].fullName}
                   </Typography>
                   <Typography variant="subtitle1">{data?.fullName}</Typography>
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <Typography color="primary" variant="h6">
-                    ID number (NRIC/FIN/Passport)
+                    {locales[locale].idNumber} (NRIC/FIN/Passport)
                   </Typography>
                   <Typography variant="subtitle1">{data?.idNumber}</Typography>
                 </Grid>
@@ -78,13 +85,13 @@ const InfoModal = ({
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <Typography color="primary" variant="h6">
-                    Email Address
+                    {locales[locale].emailAddress}
                   </Typography>
                   <Typography variant="subtitle1">{data?.email}</Typography>
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <Typography color="primary" variant="h6">
-                    Home Address
+                    {locales[locale].homeAddress}
                   </Typography>
                   <Typography variant="subtitle1">
                     {data?.homeAddress}
@@ -92,7 +99,7 @@ const InfoModal = ({
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <Typography color="primary" variant="h6">
-                    Occupation
+                    {locales[locale].occupation}
                   </Typography>
                   <Typography variant="subtitle1">
                     {data?.occupation}
@@ -101,11 +108,13 @@ const InfoModal = ({
               </Grid>
               <Grid container item spacing={2} xs={12} md={6}>
                 <Grid item xs={12}>
-                  <Typography variant="h4">Visits Information</Typography>
+                  <Typography variant="h4">
+                    {locales[locale].visitInformation}
+                  </Typography>
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <Typography color="primary" variant="h6">
-                    Name of Inmate
+                    {locales[locale].inmateName}
                   </Typography>
                   <Typography variant="subtitle1">
                     {data?.inmateName}
@@ -113,7 +122,7 @@ const InfoModal = ({
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <Typography color="primary" variant="h6">
-                    Inmate Number
+                    {locales[locale].inmateNumber}
                   </Typography>
                   <Typography variant="subtitle1">
                     {data?.inmateNumber}
@@ -121,7 +130,7 @@ const InfoModal = ({
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <Typography color="primary" variant="h6">
-                    Visit Request
+                    {locales[locale].visitRequest}
                   </Typography>
                   <Typography variant="subtitle1">
                     {data?.visitRequest}
@@ -129,7 +138,7 @@ const InfoModal = ({
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <Typography color="primary" variant="h6">
-                    Relationship to inmate
+                    {locales[locale].relationshipToInmate}
                   </Typography>
                   <Typography variant="subtitle1">
                     {data?.relationshipToInmate}
@@ -137,7 +146,7 @@ const InfoModal = ({
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <Typography color="primary" variant="h6">
-                    Reason for Visit
+                    {locales[locale].reasonForVisit}
                   </Typography>
                   <Typography variant="subtitle1">
                     {data?.reasonForVisit}
@@ -145,8 +154,7 @@ const InfoModal = ({
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <Typography color="primary" variant="subtitle1">
-                    Is your request to visit supported by inmate's family
-                    member?
+                    {locales[locale].requestSupportedByFamily}
                   </Typography>
                   <Typography variant="subtitle1">
                     {data?.familyAwareness}
@@ -157,7 +165,7 @@ const InfoModal = ({
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Close</Button>
+          <Button onClick={handleClose}>{locales[locale].close}</Button>
         </DialogActions>
       </Dialog>
     </div>

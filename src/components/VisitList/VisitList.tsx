@@ -3,6 +3,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import { useRouter } from "next/router";
+import locales from "../../locales";
 
 const styles = {
   root: {
@@ -22,6 +23,7 @@ const VisitList = ({
   handleShowInfo: any;
 }) => {
   const router = useRouter();
+  const locale: any = router.locale;
 
   return (
     <>
@@ -39,7 +41,7 @@ const VisitList = ({
       >
         <Grid item xs={12} md={3}>
           <Typography color="primary" variant="h6">
-            Inmate
+            {locales[locale].inmate}
           </Typography>
           <Typography variant="subtitle1">{data.inmateName}</Typography>
         </Grid>
@@ -53,27 +55,31 @@ const VisitList = ({
         </Grid>
         <Grid item xs={12} md={3}>
           <Typography color="primary" variant="h6">
-            Status
+            {locales[locale].status}
           </Typography>
           <Typography variant="subtitle1">
             {data.isApproved ? (
-              <>Approved</>
+              <>{locales[locale].approved}</>
             ) : data.isDeclined ? (
-              <>Declined</>
+              <>{locales[locale].decline}</>
             ) : (
-              <>Unapproved</>
+              <>{locales[locale].decline}</>
             )}
           </Typography>
         </Grid>
         <Grid item xs={12} md={3}>
           <Typography color="primary" variant="h6">
-            Visited
+            {locales[locale].visited}
           </Typography>
           <Typography variant="subtitle1">
-            {data.visited ? <>Yes</> : <>No</>}
+            {data.visited ? (
+              <>{locales[locale].yes}</>
+            ) : (
+              <>{locales[locale].no}</>
+            )}
           </Typography>
         </Grid>
-        <Grid item container xs={12} md={8} spacing={1}>
+        <Grid item container xs={12} spacing={1}>
           <Grid item xs={12} md={3}>
             <Button
               disabled={data.isApproved}
@@ -87,7 +93,7 @@ const VisitList = ({
               variant="contained"
               disableElevation
             >
-              Approve
+              {locales[locale].approve}
             </Button>
           </Grid>
           <Grid item xs={12} md={3}>
@@ -103,7 +109,7 @@ const VisitList = ({
               variant="outlined"
               disableElevation
             >
-              Decline
+              {locales[locale].decline}
             </Button>
           </Grid>
           <Grid item xs={12} md={3}>
@@ -121,24 +127,23 @@ const VisitList = ({
               variant="outlined"
               disableElevation
             >
-              {data.visited ? <>Mark Unvisited</> : <>Mark Visited</>}
+              {data.visited ? (
+                <>{locales[locale].markVisited}</>
+              ) : (
+                <>{locales[locale].markunVisited}</>
+              )}
             </Button>
           </Grid>
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          md={3}
-          sx={{ display: "flex", justifyContent: "flex-end" }}
-        >
-          <Button
-            fullWidth
-            onClick={() => handleShowInfo(data)}
-            variant="outlined"
-            disableElevation
-          >
-            Preview Info
-          </Button>
+          <Grid item xs={12} md={3}>
+            <Button
+              fullWidth
+              onClick={() => handleShowInfo(data)}
+              variant="outlined"
+              disableElevation
+            >
+              {locales[locale].previewInfo}
+            </Button>
+          </Grid>
         </Grid>
       </Grid>
     </>

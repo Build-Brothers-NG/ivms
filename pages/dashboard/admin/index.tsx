@@ -10,6 +10,8 @@ import VisitList from "../../../src/components/VisitList";
 import { getBookings, updateBooking } from "../../../src/backend/booking";
 import { GlobalState } from "../../../src/Global";
 import InfoModal from "../../../src/components/InfoModal";
+import { useRouter } from "next/router";
+import locales from "../../../src/locales";
 
 const Admin: NextPage = () => {
   const [value, setValue] = React.useState("1");
@@ -18,6 +20,9 @@ const Admin: NextPage = () => {
   const [data, setData] = React.useState<any>(null);
 
   const { user } = React.useContext(GlobalState);
+
+  const router = useRouter();
+  const locale: any = router.locale;
 
   const handleChange = (event: any, newValue: any) => {
     setValue(newValue);
@@ -58,14 +63,11 @@ const Admin: NextPage = () => {
         <Box sx={{ padding: "24px" }}>
           <TabContext value={value}>
             <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-              <TabList
-                onChange={handleChange}
-                aria-label="lab API tabs example"
-              >
-                <Tab label="All Visits" value="1" />
-                <Tab label="Requested Visits" value="2" />
-                <Tab label="Approved Visits" value="3" />
-                <Tab label="Declined Visits" value="4" />
+              <TabList onChange={handleChange}>
+                <Tab label={locales[locale].allVisits} value="1" />
+                <Tab label={locales[locale].requestedVisits} value="2" />
+                <Tab label={locales[locale].approvedVisits} value="3" />
+                <Tab label={locales[locale].declinedVisits} value="4" />
               </TabList>
             </Box>
             <TabPanel value="1">

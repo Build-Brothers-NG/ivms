@@ -104,9 +104,10 @@ const Booking: NextPage = () => {
           <Grid container spacing={{ xs: 3, md: 5 }}>
             <Grid item xs={12}>
               <Typography color="primary" variant="h4">
-                {locales[locale].completeProfile.split("👋")[0]} 👋
+                {/* {locales[locale].completeProfile.split("👋")[0]} 👋
                 {user.displayName}.{" "}
-                {locales[locale].completeProfile.split("👋")[1]}
+                {locales[locale].completeProfile.split("👋")[1]} */}
+                {locales[locale].whoAreTryingToVisit}
               </Typography>
             </Grid>
             <Formik

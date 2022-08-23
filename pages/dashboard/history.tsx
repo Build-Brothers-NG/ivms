@@ -9,12 +9,17 @@ import TabPanel from "@mui/lab/TabPanel";
 import HistoryList from "../../src/components/HistoryList";
 import { getUserBookings } from "../../src/backend/booking";
 import { GlobalState } from "../../src/Global";
+import { useRouter } from "next/router";
+import locales from "../../src/locales";
 
 const History: NextPage = () => {
   const [value, setValue] = React.useState("1");
   const [history, setHistory] = React.useState<any[]>([]);
 
   const { user } = React.useContext(GlobalState);
+
+  const router = useRouter();
+  const locale: any = router.locale;
 
   const handleChange = (event: any, newValue: any) => {
     setValue(newValue);
@@ -40,14 +45,11 @@ const History: NextPage = () => {
         <Box sx={{ padding: "24px" }}>
           <TabContext value={value}>
             <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-              <TabList
-                onChange={handleChange}
-                aria-label="lab API tabs example"
-              >
-                <Tab label="All Visits" value="1" />
-                <Tab label="Requested Visits" value="2" />
-                <Tab label="Approved Visits" value="3" />
-                <Tab label="Declined Visits" value="4" />
+              <TabList onChange={handleChange}>
+                <Tab label={locales[locale].allVisits} value="1" />
+                <Tab label={locales[locale].requestedVisits} value="2" />
+                <Tab label={locales[locale].approvedVisits} value="3" />
+                <Tab label={locales[locale].declinedVisits} value="4" />
               </TabList>
             </Box>
             <TabPanel value="1">

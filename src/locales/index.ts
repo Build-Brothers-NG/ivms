@@ -56,6 +56,7 @@ const locales: any = {
     yes: "YES",
     no: "NO",
     book: "BOOK",
+    close: "Close",
     //
     //
     peopleVisited: "People Visited",
@@ -67,6 +68,38 @@ const locales: any = {
     profileAwaitingVerification: "Your profile is awaiting verification!",
     completeYourProfile: "Complete your profile",
     language: "Langue",
+    welcome: "Welcome",
+    dashboard: "Dashboard",
+    profile: "Profile",
+    booking: "Booking",
+    history: "History",
+    whoAreTryingToVisit: "Hi, 👋 Who are you trying to visit?",
+    //
+    //
+    //
+    allVisits: "ALL VISITS",
+    requestedVisits: "REQUESTED VISITS",
+    approvedVisits: "APPROVED VISITS",
+    declinedVisits: "DECLINED VISITS",
+    //
+    //
+    //
+    admin: "Admin",
+    //
+    //
+    inmate: "Inmate",
+    status: "Status",
+    approved: "Approved",
+    approve: "Approve",
+    decline: "Decline",
+    markVisited: "Mark Visited",
+    markunVisited: "Mark Unvisited",
+    previewInfo: "Preview Information",
+    visited: "Visited",
+    //
+    //
+    visitInformation: "Visit Information",
+    visitorsInformation: "Visitors Information",
   },
   fr: {
     //
@@ -128,6 +161,7 @@ const locales: any = {
     yes: "OUI",
     no: "NON",
     book: "RESEVER",
+    close: "Fermer",
     //
     //
     peopleVisited: "Personnes Visitées",
@@ -140,6 +174,37 @@ const locales: any = {
       "Votre profil est en attente de vérification !",
     completeYourProfile: "complète ton profil",
     language: "Language",
+    welcome: "Bienvenue",
+    dashboard: "Tableau De Bord",
+    profile: "Profil",
+    booking: "Réservation",
+    history: "Historique",
+    whoAreTryingToVisit: "Salut, 👋 À qui essayez-vous de rendre visite?",
+    //
+    //
+    //
+    allVisits: "TOUTES LES VISITE",
+    requestedVisits: "VISITE DEMANDÉES",
+    approvedVisits: "VISITE APPROUVÉES",
+    declinedVisits: "VISITE REFUSÉES",
+    //
+    //
+    //
+    admin: "Administrateur",
+    //
+    inmate: "Détenu",
+    status: "Statut",
+    approved: "Approuvé",
+    approve: "APPROUVER",
+    decline: "DÉCLIN",
+    markVisited: "MARQUER COMME NON VISITÉ",
+    markunVisited: "Marquez visité",
+    previewInfo: "INFORMATIONS SUR L'APERÇU",
+    visited: "A visité",
+    //
+    //
+    visitInformation: "Informations sur la visite",
+    visitorsInformation: "Informations visiteurs",
   },
 };
 
